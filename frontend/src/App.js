@@ -1,39 +1,37 @@
+// import path from 'path';
+// import AutoLoad from '@fastify/autoload';
+// import fastifyStatic from '@fastify/static';
 import logo from './logo.svg';
 import './App.css';
 
-const path = require('path');
-const AutoLoad = require('@fastify/autoload');
-const fastifyStatic = require('@fastify/static');
+// module.exports = async function (fastify, opts) {
+//   // Place here your custom code!
 
+//   fastify.register(fastifyStatic, {
+//     root: `${process.cwd()}/frontend/build`,
+//   });
 
-module.exports = async function (fastify, opts) {
-  // Place here your custom code!
+//   fastify.setNotFoundHandler((req, res) => {
+//     res.sendFile('index.html');
+//   });
 
-  fastify.register(fastifyStatic, {
-    root: `${process.cwd()}/frontend/build`,
-  });
+//   // Do not touch the following lines
 
-  fastify.setNotFoundHandler((req, res) => {
-    res.sendFile('index.html');
-  });
+//   // This loads all plugins defined in plugins
+//   // those should be support plugins that are reused
+//   // through your application
+//   fastify.register(AutoLoad, {
+//     dir: path.join(__dirname, 'plugins'),
+//     options: Object.assign({}, opts)
+//   });
 
-  // Do not touch the following lines
-
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'plugins'),
-    options: Object.assign({}, opts)
-  });
-
-  // This loads all plugins defined in routes
-  // define your routes in one of these
-  fastify.register(AutoLoad, {
-    dir: path.join(__dirname, 'routes'),
-    options: Object.assign({}, opts)
-  });
-}
+//   // This loads all plugins defined in routes
+//   // define your routes in one of these
+//   fastify.register(AutoLoad, {
+//     dir: path.join(__dirname, 'routes'),
+//     options: Object.assign({}, opts)
+//   });
+// }
 
 function App() {
   return (
