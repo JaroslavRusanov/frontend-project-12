@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "final frontend training project",
   "main": "src/index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx start-server -s ./frontend/build",
-    "build": "npm run build --prefix frontend"
+    "build": "npm run build --prefix frontend",
+    "postinstall": "cd frontend && npm ci"
   },
   "author": "Iaroslav Rusanov sco.nuff@gmail.com",
   "license": "ISC",
