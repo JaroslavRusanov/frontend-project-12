@@ -1,37 +1,35 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
-import useAuth from '../../auth/hook.jsx';
-import routes from '../../routes.js';
+import { useGetAuthTokenMutation } from '../../RTKQueryAPI/Api.js';
 import logo from './download.jpeg';
+import useAuth from '../../auth/hook.jsx';
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logIn, loggedIn } = useAuth();
-
-  const fromPage = location?.state?.from?.pathname || '/';
 
   const [isInvalideAuth, setFailAuth] = useState(false);
+  const { logIn } = useAuth();
+  const [getToken] = useGetAuthTokenMutation();
+
+  const fromPage = location?.state?.from?.pathname || '/';
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: async ({ username, password }) => {
+    onSubmit: async (inputData) => {
       try {
-        const { data } = await axios.post(routes.loginPath(), { username, password });
-        localStorage.setItem('userId', JSON.stringify(data));
+        const { data } = await getToken(inputData);
+        localStorage.setItem('userId', data.token);
+        setFailAuth(false);
         logIn();
         navigate(fromPage);
-        console.log('Boom');
-        setFailAuth(false);
-      } catch (err) {
+      } catch (e) {
         setFailAuth(true);
-        throw err;
       }
     },
   });
