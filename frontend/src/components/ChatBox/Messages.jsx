@@ -1,36 +1,31 @@
+import { useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import { useGetMessagesQuery } from '../../RTKQueryAPI/Api.js';
+import socket from '../../socket.js';
 
 const Messages = ({ activeChannel, setCounterMessages }) => {
-  const { data, error, isLoading } = useGetMessagesQuery;
+  const [messages, setMessages] = useState([]);
 
   const activeChannelId = activeChannel.id;
+  socket.on('newMessage', (data) => {
+    const addNewMessage = [...messages, data];
+    setMessages(addNewMessage);
+    setCounterMessages(addNewMessage.length);
+  });
 
-  const getMessages = (response) => {
-    if (!response) {
-      return null;
-    }
-
-    const messages = Object.entries(response)
-      .filter(([, { channelId }]) => channelId === activeChannelId)
-      .map(([, message]) => (
-        <div key={message.id} className="text-break mb-2">
-          <b>
-            {message.username}
-          </b>
-          :
-          {message.body}
-        </div>
-      ));
-    setCounterMessages(messages.length);
-    return messages;
-  };
+  if (!messages) return <Spinner animation="border" />;
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-      {isLoading && <Spinner animation="border" />}
-      {getMessages(data)}
-      {error && console.log(error)}
+      {messages
+        .filter(({ channelID }) => activeChannelId === channelID)
+        .map((message) => (
+          <div key={message.id} className="text-break mb-2">
+            <b>
+              {message.username}
+            </b>
+            {`: ${message.body.body}`}
+          </div>
+        ))}
     </div>
   );
 };

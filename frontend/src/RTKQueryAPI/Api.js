@@ -20,21 +20,23 @@ export const api = createApi({
         body: user,
       }),
     }),
+    addMessage: builder.mutation({
+      query: (message) => ({
+        url: 'messages',
+        method: 'POST',
+        body: message,
+      }),
+    }),
     getChannels: builder.query({
       query: () => ({
         url: 'channels',
-      }),
-    }),
-    getMessages: builder.query({
-      query: () => ({
-        url: 'messages',
       }),
     }),
   }),
 });
 
 export const {
-  useGetChannelsQuery,
-  useGetMessagesQuery,
   useGetAuthTokenMutation,
+  useAddMessageMutation,
+  useGetChannelsQuery,
 } = api;

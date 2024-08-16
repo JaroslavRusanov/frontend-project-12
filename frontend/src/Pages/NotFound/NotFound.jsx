@@ -1,4 +1,4 @@
-import notFound from './notFound.svg';
+import notFound from '../../assets/notFound.svg';
 
 const NotFound = () => (
   <div className="text-center">

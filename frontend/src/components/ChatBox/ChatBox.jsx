@@ -7,7 +7,8 @@ const ChatBox = ({ activeChannel }) => {
   const inputEl = useRef(null);
   useEffect(() => {
     inputEl.current.focus();
-  }, [activeChannel]);
+    inputEl.current.value = '';
+  }, [activeChannel, counterMessages]);
 
   return (
     <div className="col p-0 h-100">
@@ -23,7 +24,7 @@ const ChatBox = ({ activeChannel }) => {
           </span>
         </div>
         <Messages activeChannel={activeChannel} setCounterMessages={setCounterMessages} />
-        <MessageInput inputEl={inputEl} />
+        <MessageInput inputEl={inputEl} channelID={activeChannel.id} />
       </div>
     </div>
   );

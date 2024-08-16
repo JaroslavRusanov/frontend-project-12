@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useGetAuthTokenMutation } from '../../RTKQueryAPI/Api.js';
-import logo from './download.jpeg';
+import logo from '../../assets/login.jpeg';
 import useAuth from '../../auth/hook.jsx';
 
 const Login = () => {
@@ -25,6 +25,7 @@ const Login = () => {
       try {
         const { data } = await getToken(inputData);
         localStorage.setItem('userId', data.token);
+        localStorage.setItem('userName', data.username);
         setFailAuth(false);
         logIn();
         navigate(fromPage);
@@ -58,8 +59,8 @@ const Login = () => {
                       placeholder="Ваш ник"
                       className="form-control"
                       onChange={formik.handleChange}
-                      value={formik.values.username}
                       isInvalid={isInvalideAuth}
+                      defaultValue={formik.values.username}
                     />
                   </FloatingLabel>
                   <FloatingLabel
@@ -76,7 +77,7 @@ const Login = () => {
                       className="form-control"
                       label="password"
                       onChange={formik.handleChange}
-                      value={formik.values.password}
+                      defaultValue={formik.values.password}
                       isInvalid={isInvalideAuth}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>Неверные имя пользователя или пароль</Form.Control.Feedback>

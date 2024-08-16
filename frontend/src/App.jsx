@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
     setLoggedIn(false);
   };
 
@@ -48,9 +49,7 @@ const AuthButton = () => {
   const auth = useAuth();
 
   return (
-    auth.loggedIn
-      ? <Button type onClick={auth.logOut}>Выйти</Button>
-      : null
+    auth.loggedIn && <Button type="button" onClick={auth.logOut}>Выйти</Button>
   );
 };
 
