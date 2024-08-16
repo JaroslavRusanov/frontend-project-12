@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import routes from '../utils/routes.js';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/',
+    baseUrl: routes.apiPath,
     tagTypes: ['Channel', 'Message'],
     prepareHeaders: ((headers) => {
       const token = localStorage.getItem('userId');
@@ -15,21 +16,21 @@ export const api = createApi({
   endpoints: (builder) => ({
     getAuthToken: builder.mutation({
       query: (user) => ({
-        url: 'login',
+        url: routes.loginPath,
         method: 'POST',
         body: user,
       }),
     }),
     addMessage: builder.mutation({
       query: (message) => ({
-        url: 'messages',
+        url: routes.messagePath,
         method: 'POST',
         body: message,
       }),
     }),
     getChannels: builder.query({
       query: () => ({
-        url: 'channels',
+        url: routes.channelsPath,
       }),
     }),
   }),

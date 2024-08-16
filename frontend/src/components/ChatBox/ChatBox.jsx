@@ -3,7 +3,9 @@ import Messages from './Messages.jsx';
 import MessageInput from './MessageInput.jsx';
 
 const ChatBox = ({ activeChannel }) => {
+  // need to correct counter for different channel
   const [counterMessages, setCounterMessages] = useState(0);
+
   const inputEl = useRef(null);
   useEffect(() => {
     inputEl.current.focus();

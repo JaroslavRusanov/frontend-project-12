@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { useAddMessageMutation } from '../../RTKQueryAPI/Api.js';
+import { useAddMessageMutation } from '../../RTKQueryAPI/api.js';
 import MessageInputButton from '../../assets/MessageInputButtonSVG.jsx';
 
 const MessageInput = ({ inputEl, channelID }) => {

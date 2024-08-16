@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import socket from '../../socket.js';
+import socket from '../../utils/socket.js';
 
 const Messages = ({ activeChannel, setCounterMessages }) => {
   const [messages, setMessages] = useState([]);

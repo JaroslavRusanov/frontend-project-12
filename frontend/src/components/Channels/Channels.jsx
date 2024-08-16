@@ -1,5 +1,6 @@
 import Spinner from 'react-bootstrap/Spinner';
-import { useGetChannelsQuery } from '../../RTKQueryAPI/Api.js';
+import cn from 'classnames';
+import { useGetChannelsQuery } from '../../RTKQueryAPI/api.js';
 
 const Channels = ({ activeChannel, setActiveChannel }) => {
   const { data, error, isLoading } = useGetChannelsQuery();
@@ -11,11 +12,14 @@ const Channels = ({ activeChannel, setActiveChannel }) => {
     >
       {isLoading && <Spinner animation="border" />}
       {data && Object.entries(data).map(([, channel]) => {
-        // need to refactoring
-        const classNames = channel.name === activeChannel.name
-          ? 'w-100 rounded-0 text-start btn btn-secondary'
-          : 'w-100 rounded-0 text-start btn';
-        // this!
+        const classNames = cn(
+          'w-100',
+          'rounded-0',
+          'text-start',
+          'btn',
+          { 'btn-secondary': channel.name === activeChannel.name },
+        );
+
         return (
           <li key={channel.id} className="nav-item w-100">
             <button type="button" className={classNames} onClick={() => setActiveChannel(channel)}>
