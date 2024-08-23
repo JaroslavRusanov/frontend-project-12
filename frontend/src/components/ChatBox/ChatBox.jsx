@@ -3,14 +3,20 @@ import Messages from './Messages.jsx';
 import MessageInput from './MessageInput.jsx';
 
 const ChatBox = ({ activeChannel }) => {
-  // need to correct counter for different channel
-  const [counterMessages, setCounterMessages] = useState(0);
+  const [messages, setMessages] = useState([]);
+
+  const getCounterMessagesById = (id) => (
+    messages
+      .filter(({ channelID }) => channelID === id)
+      .length
+  );
 
   const inputEl = useRef(null);
+
   useEffect(() => {
     inputEl.current.focus();
     inputEl.current.value = '';
-  }, [activeChannel, counterMessages]);
+  }, [activeChannel, messages]);
 
   return (
     <div className="col p-0 h-100">
@@ -22,10 +28,10 @@ const ChatBox = ({ activeChannel }) => {
             </b>
           </p>
           <span className="text-muted">
-            {`${counterMessages} сообщений`}
+            {`${getCounterMessagesById(activeChannel.id)} сообщений`}
           </span>
         </div>
-        <Messages activeChannel={activeChannel} setCounterMessages={setCounterMessages} />
+        <Messages activeChannel={activeChannel} messages={messages} setMessages={setMessages} />
         <MessageInput inputEl={inputEl} channelID={activeChannel.id} />
       </div>
     </div>

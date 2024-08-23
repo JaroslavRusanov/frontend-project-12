@@ -4,5 +4,7 @@ export default {
   apiPath,
   loginPath: '/login',
   channelsPath: '/channels',
-  messagePath: '/messages',
+  messagesPath: '/messages',
+  channelsPathWithID: (id) => `/channels/${id}`,
+  messagesPathWithID: (id) => `/messages/${id}`,
 };

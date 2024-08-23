@@ -23,15 +23,52 @@ export const api = createApi({
     }),
     addMessage: builder.mutation({
       query: (message) => ({
-        url: routes.messagePath,
+        url: routes.messagesPath,
         method: 'POST',
         body: message,
       }),
+    }),
+    addChannel: builder.mutation({
+      query: (channel) => ({
+        url: routes.channelsPath,
+        method: 'POST',
+        body: channel,
+      }),
+      invalidatesTags: ['Channel'],
+    }),
+    removeChannel: builder.mutation({
+      query: (id) => ({
+        url: routes.channelsPathWithID(id),
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Channel'],
+    }),
+    removeMessage: builder.mutation({
+      query: (id) => ({
+        url: routes.messagesPathWithID(id),
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Message'],
+    }),
+    editChannel: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: routes.channelsPathWithID(id),
+        method: 'PATCH',
+        body: patch,
+      }),
+      invalidatesTags: ['Channel'],
     }),
     getChannels: builder.query({
       query: () => ({
         url: routes.channelsPath,
       }),
+      providesTags: ['Channel'],
+    }),
+    getMessages: builder.query({
+      query: () => ({
+        url: routes.messagesPath,
+      }),
+      providesTags: ['Message'],
     }),
   }),
 });
@@ -39,5 +76,10 @@ export const api = createApi({
 export const {
   useGetAuthTokenMutation,
   useAddMessageMutation,
+  useAddChannelMutation,
+  useRemoveChannelMutation,
+  useRemoveMessageMutation,
+  useEditChannelMutation,
   useGetChannelsQuery,
+  useGetMessagesQuery,
 } = api;
