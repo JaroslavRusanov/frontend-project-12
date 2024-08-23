@@ -15,6 +15,7 @@ import AuthContext from './auth/contexts.jsx';
 import Login from './Pages/Login/Login.jsx';
 import NotFound from './Pages/NotFound/NotFound.jsx';
 import Chat from './Pages/Chat/Chat.jsx';
+import Signup from './Pages/Signup/Signup.jsx';
 
 import store from './RTKQueryAPI/index.js';
 
@@ -64,11 +65,11 @@ const App = () => (
                 <a className="navbar-brand" href="/">Hexlet Chat</a>
                 <AuthButton />
               </div>
-
             </nav>
             <Routes>
               <Route path="*" element={<NotFound />} />
               <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
               <Route
                 path="/"
                 element={(

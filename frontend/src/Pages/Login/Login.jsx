@@ -10,7 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isInvalideAuth, setFailAuth] = useState(false);
+  const [isInvalidAuth, setFailAuth] = useState(false);
   const { logIn } = useAuth();
   const [getToken] = useGetAuthTokenMutation();
 
@@ -59,7 +59,7 @@ const Login = () => {
                       placeholder="Ваш ник"
                       className="form-control"
                       onChange={formik.handleChange}
-                      isInvalid={isInvalideAuth}
+                      isInvalid={isInvalidAuth}
                       defaultValue={formik.values.username}
                     />
                   </FloatingLabel>
@@ -78,7 +78,7 @@ const Login = () => {
                       label="password"
                       onChange={formik.handleChange}
                       defaultValue={formik.values.password}
-                      isInvalid={isInvalideAuth}
+                      isInvalid={isInvalidAuth}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>Неверные имя пользователя или пароль</Form.Control.Feedback>
                   </FloatingLabel>
