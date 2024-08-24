@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
-import { string, object } from 'yup';
+// import { string, object } from 'yup';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import logo from '../../assets/avatar.jpg';
 
@@ -41,7 +41,6 @@ const Signup = () => {
                       className="form-control"
                       value={formik.values.username}
                       onChange={formik.handleChange}
-                      isInvalid={errorSignup.isInvalid}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>Код ошибки</Form.Control.Feedback>
                   </FloatingLabel>
@@ -57,7 +56,6 @@ const Signup = () => {
                       className="form-control"
                       value={formik.values.password}
                       onChange={formik.handleChange}
-                      isInvalid={errorSignup.isInvalid}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>Код ошибки</Form.Control.Feedback>
                   </FloatingLabel>

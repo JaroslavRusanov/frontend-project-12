@@ -3,6 +3,7 @@ import Channels from '../../components/Channels/Channels.jsx';
 import ChatBox from '../../components/ChatBox/ChatBox.jsx';
 import ChannelButtonSVG from '../../assets/ChannelButtonSVG.jsx';
 import getModal from '../../components/modals/index.js';
+import socket from '../../utils/socket.js';
 
 const renderModal = (
   modalType,
@@ -29,18 +30,24 @@ const renderModal = (
   );
 };
 
-const Chat = ({ messages }) => {
-  // HOOKS
+const Chat = () => {
   const defaultChannel = { id: 1, name: 'general', removable: false };
+  // HOOKS
   const [activeChannel, setActiveChannel] = useState(defaultChannel);
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
+  const [messages, setMessages] = useState([]);
 
   const handleModal = (type, currentChannel) => (
     currentChannel
       ? setModalType({ type, currentChannel })
       : setModalType({ type, currentChannel: null }));
   const closeModal = () => (setModalType({ ...modalType, type: null }));
+
+  socket.on('newMessage', (data) => {
+    const addNewMessage = [...messages, data];
+    setMessages(addNewMessage);
+  });
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -59,7 +66,7 @@ const Chat = ({ messages }) => {
             handleModal={handleModal}
           />
         </div>
-        <ChatBox activeChannel={activeChannel} messages={messages}/>
+        <ChatBox activeChannel={activeChannel} messages={messages} />
         {renderModal(
           modalType,
           closeModal,
