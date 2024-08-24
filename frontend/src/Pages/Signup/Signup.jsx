@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import { string, object } from 'yup';
 import { Form, FloatingLabel } from 'react-bootstrap';
+import logo from '../../assets/avatar.jpg';
 
 const Signup = () => {
   // HOOKS
@@ -24,9 +26,9 @@ const Signup = () => {
           <div className="card shadow-sm">
             <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <img src="" className="rounded-circle" alt="Регистрация" />
+                <img src={logo} className="rounded-circle" alt="Регистрация" />
               </div>
-              <Form className="w-50" onSubmit={formik.handleSubmit}>
+              <Form className="w-50" noValidate onSubmit={formik.handleSubmit}>
                 <Form.Group>
                   <h1 className="text-center mb-4">Регистрация</h1>
                   <FloatingLabel className="form-floating mb-3" label="Имя пользователя">
@@ -39,6 +41,7 @@ const Signup = () => {
                       className="form-control"
                       value={formik.values.username}
                       onChange={formik.handleChange}
+                      isInvalid={errorSignup.isInvalid}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>Код ошибки</Form.Control.Feedback>
                   </FloatingLabel>
@@ -54,6 +57,7 @@ const Signup = () => {
                       className="form-control"
                       value={formik.values.password}
                       onChange={formik.handleChange}
+                      isInvalid={errorSignup.isInvalid}
                     />
                     <Form.Control.Feedback type="invalid" tooltip>Код ошибки</Form.Control.Feedback>
                   </FloatingLabel>

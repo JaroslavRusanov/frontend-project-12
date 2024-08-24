@@ -1,10 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import Messages from './Messages.jsx';
 import MessageInput from './MessageInput.jsx';
 
-const ChatBox = ({ activeChannel }) => {
-  const [messages, setMessages] = useState([]);
-
+const ChatBox = ({ activeChannel, messages }) => {
   const getCounterMessagesById = (id) => (
     messages
       .filter(({ channelID }) => channelID === id)
@@ -31,7 +29,7 @@ const ChatBox = ({ activeChannel }) => {
             {`${getCounterMessagesById(activeChannel.id)} сообщений`}
           </span>
         </div>
-        <Messages activeChannel={activeChannel} messages={messages} setMessages={setMessages} />
+        <Messages activeChannel={activeChannel} messages={messages} />
         <MessageInput inputEl={inputEl} channelID={activeChannel.id} />
       </div>
     </div>

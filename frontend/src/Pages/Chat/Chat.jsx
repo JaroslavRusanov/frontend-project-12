@@ -29,7 +29,7 @@ const renderModal = (
   );
 };
 
-const Chat = () => {
+const Chat = ({ messages }) => {
   // HOOKS
   const defaultChannel = { id: 1, name: 'general', removable: false };
   const [activeChannel, setActiveChannel] = useState(defaultChannel);
@@ -59,7 +59,7 @@ const Chat = () => {
             handleModal={handleModal}
           />
         </div>
-        <ChatBox activeChannel={activeChannel} />
+        <ChatBox activeChannel={activeChannel} messages={messages}/>
         {renderModal(
           modalType,
           closeModal,

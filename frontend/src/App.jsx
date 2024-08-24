@@ -18,10 +18,17 @@ import Chat from './Pages/Chat/Chat.jsx';
 import Signup from './Pages/Signup/Signup.jsx';
 
 import store from './RTKQueryAPI/index.js';
+import socket from './utils/socket.js';
 
 // Authorization is designed with Context and AuthHook for correct redirection routes
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const getInitLogggedIn = () => {
+    if (localStorage.getItem('userId')) {
+      return true;
+    }
+    return false;
+  };
+  const [loggedIn, setLoggedIn] = useState(getInitLogggedIn());
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
@@ -54,36 +61,44 @@ const AuthButton = () => {
   );
 };
 
-const App = () => (
-  <Provider store={store}>
-    <AuthProvider>
-      <BrowserRouter>
-        <div className="h-100" id="chat">
-          <div className="d-flex flex-column h-100">
-            <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-              <div className="container">
-                <a className="navbar-brand" href="/">Hexlet Chat</a>
-                <AuthButton />
-              </div>
-            </nav>
-            <Routes>
-              <Route path="*" element={<NotFound />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<Signup />} />
-              <Route
-                path="/"
-                element={(
-                  <PrivateRoute>
-                    <Chat />
-                  </PrivateRoute>
-                )}
-              />
-            </Routes>
+const App = () => {
+  const [messages, setMessages] = useState([]);
+  socket.on('newMessage', (data) => {
+    const addNewMessage = [...messages, data];
+    setMessages(addNewMessage);
+  });
+
+  return (
+    <Provider store={store}>
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="h-100" id="chat">
+            <div className="d-flex flex-column h-100">
+              <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+                <div className="container">
+                  <a className="navbar-brand" href="/">Hexlet Chat</a>
+                  <AuthButton />
+                </div>
+              </nav>
+              <Routes>
+                <Route path="*" element={<NotFound />} />
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<Signup />} />
+                <Route
+                  path="/"
+                  element={(
+                    <PrivateRoute>
+                      <Chat messages={messages} />
+                    </PrivateRoute>
+                  )}
+                />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
-  </Provider>
-);
+        </BrowserRouter>
+      </AuthProvider>
+    </Provider>
+  );
+};
 
 export default App;

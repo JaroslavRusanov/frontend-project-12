@@ -1,13 +1,7 @@
 import Spinner from 'react-bootstrap/Spinner';
-import socket from '../../utils/socket.js';
 
-const Messages = ({ activeChannel, messages, setMessages }) => {
+const Messages = ({ activeChannel, messages }) => {
   const activeChannelID = activeChannel.id;
-
-  socket.on('newMessage', (data) => {
-    const addNewMessage = [...messages, data];
-    setMessages(addNewMessage);
-  });
 
   if (!messages) return <Spinner animation="border" />;
 
