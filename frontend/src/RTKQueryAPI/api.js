@@ -21,12 +21,20 @@ export const api = createApi({
         body: user,
       }),
     }),
+    addNewUser: builder.mutation({
+      query: (newUser) => ({
+        url: routes.signupPath,
+        method: 'POST',
+        body: newUser,
+      }),
+    }),
     addMessage: builder.mutation({
       query: (message) => ({
         url: routes.messagesPath,
         method: 'POST',
         body: message,
       }),
+      invalidatesTags: ['Channel'],
     }),
     addChannel: builder.mutation({
       query: (channel) => ({
@@ -75,6 +83,7 @@ export const api = createApi({
 
 export const {
   useGetAuthTokenMutation,
+  useAddNewUserMutation,
   useAddMessageMutation,
   useAddChannelMutation,
   useRemoveChannelMutation,

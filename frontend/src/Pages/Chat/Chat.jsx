@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Channels from '../../components/Channels/Channels.jsx';
 import ChatBox from '../../components/ChatBox/ChatBox.jsx';
 import ChannelButtonSVG from '../../assets/ChannelButtonSVG.jsx';
