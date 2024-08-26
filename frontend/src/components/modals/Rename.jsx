@@ -1,14 +1,14 @@
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { useEditChannelMutation, useGetChannelsQuery } from '../../RTKQueryAPI/api.js';
+import { useEditChannelMutation, useGetChannelsQuery } from '../../store/api.js';
 
 const Rename = ({
   modalType,
   closeModal,
   errorValidation,
   setErrorValidation,
-  setActiveChannel,
+  activeChannnelClick,
 }) => {
   // HOOKS
   const [editChannel] = useEditChannelMutation();
@@ -30,7 +30,7 @@ const Rename = ({
         await channelSchema.validate(values);
         // EDIT CHANNEL
         const newName = await editChannel({ id: currentChannelId, name: values.body });
-        setActiveChannel(newName.data);
+        activeChannnelClick(newName.data);
         setErrorValidation({ isInvalid: false, error: '' });
         closeModal();
       } catch (e) {

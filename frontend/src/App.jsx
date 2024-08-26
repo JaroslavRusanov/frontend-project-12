@@ -1,67 +1,32 @@
-import { useState } from 'react';
 import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate,
-  useLocation,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { Button } from 'react-bootstrap';
-
-import useAuth from './auth/hook.jsx';
-import AuthContext from './auth/contexts.jsx';
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMessages, messagesSelector } from './store/Slices/messages.js';
+import socket from './utils/socket.js';
+import AuthProvider from './auth/AuthProvider.jsx';
+import AuthButton from './auth/AuthButton.jsx';
+import PrivateRoute from './auth/PtivateRoute.jsx';
 import Login from './Pages/Login/Login.jsx';
 import NotFound from './Pages/NotFound/NotFound.jsx';
 import Chat from './Pages/Chat/Chat.jsx';
 import Signup from './Pages/Signup/Signup.jsx';
 
-import store from './RTKQueryAPI/index.js';
+const App = () => {
+  const dispatch = useDispatch();
+  const messages = useSelector(messagesSelector);
 
-// Authorization is designed with Context and AuthHook for correct redirection routes
-const AuthProvider = ({ children }) => {
-  const getInitLogggedIn = () => {
-    if (localStorage.getItem('userId')) {
-      return true;
-    }
-    return false;
-  };
-  const [loggedIn, setLoggedIn] = useState(getInitLogggedIn());
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
-    setLoggedIn(false);
-  };
+  useEffect(() => {
+    socket.on('newMessage', (data) => {
+      const newMessages = [...messages, data];
+      dispatch(setMessages(newMessages));
+    });
+  }, [messages]);
 
   return (
-    /* eslint-disable-next-line react/jsx-no-constructed-context-values */
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-const PrivateRoute = ({ children }) => {
-  const auth = useAuth();
-  const location = useLocation();
-
-  return (
-    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
-  );
-};
-
-const AuthButton = () => {
-  const auth = useAuth();
-
-  return (
-    auth.loggedIn && <Button type="button" onClick={auth.logOut}>Выйти</Button>
-  );
-};
-
-const App = () => (
-  <Provider store={store}>
     <AuthProvider>
       <BrowserRouter>
         <div className="h-100" id="chat">
@@ -89,7 +54,7 @@ const App = () => (
         </div>
       </BrowserRouter>
     </AuthProvider>
-  </Provider>
-);
+  );
+};
 
 export default App;

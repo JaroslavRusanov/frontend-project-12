@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
-import { useGetAuthTokenMutation } from '../../RTKQueryAPI/api.js';
+import { useGetAuthTokenMutation } from '../../store/api.js';
 import logo from '../../assets/login.jpeg';
 import useAuth from '../../auth/hook.jsx';
 

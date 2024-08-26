@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { activeChannelSelector, setActiveChannel } from '../../store/Slices/channels.js';
+import { messagesSelector } from '../../store/Slices/messages.js';
 import Channels from '../../components/Channels/Channels.jsx';
 import ChatBox from '../../components/ChatBox/ChatBox.jsx';
 import ChannelButtonSVG from '../../assets/ChannelButtonSVG.jsx';
 import getModal from '../../components/modals/index.js';
-import socket from '../../utils/socket.js';
 
 const renderModal = (
   modalType,
   closeModal,
-  setActiveChannel,
-  defaultChannel,
+  activeChannnelClick,
   errorValidation,
   setErrorValidation,
 ) => {
@@ -22,8 +23,7 @@ const renderModal = (
     <Component
       modalType={modalType}
       closeModal={closeModal}
-      setActiveChannel={setActiveChannel}
-      defaultChannel={defaultChannel}
+      activeChannnelClick={activeChannnelClick}
       errorValidation={errorValidation}
       setErrorValidation={setErrorValidation}
     />
@@ -31,23 +31,22 @@ const renderModal = (
 };
 
 const Chat = () => {
-  const defaultChannel = { id: 1, name: 'general', removable: false };
   // HOOKS
-  const [activeChannel, setActiveChannel] = useState(defaultChannel);
+  const activeChannel = useSelector(activeChannelSelector);
+  const dispatch = useDispatch();
+  const activeChannnelClick = (channel) => {
+    dispatch(setActiveChannel(channel));
+  };
+  const messages = useSelector(messagesSelector);
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
 
   const handleModal = (type, currentChannel) => (
     currentChannel
       ? setModalType({ type, currentChannel })
       : setModalType({ type, currentChannel: null }));
   const closeModal = () => (setModalType({ ...modalType, type: null }));
-
-  socket.on('newMessage', (data) => {
-    const addNewMessage = [...messages, data];
-    setMessages(addNewMessage);
-  });
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
@@ -62,7 +61,7 @@ const Chat = () => {
           </div>
           <Channels
             activeChannel={activeChannel}
-            setActiveChannel={setActiveChannel}
+            activeChannnelClick={activeChannnelClick}
             handleModal={handleModal}
           />
         </div>
@@ -70,8 +69,7 @@ const Chat = () => {
         {renderModal(
           modalType,
           closeModal,
-          setActiveChannel,
-          defaultChannel,
+          activeChannnelClick,
           errorValidation,
           setErrorValidation,
         )}

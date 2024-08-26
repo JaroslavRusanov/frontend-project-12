@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import logo from '../../assets/avatar.jpg';
 import useAuth from '../../auth/hook.jsx';
-import { useAddNewUserMutation } from '../../RTKQueryAPI/api.js';
+import { useAddNewUserMutation } from '../../store/api.js';
 
 const Signup = () => {
   // HOOKS

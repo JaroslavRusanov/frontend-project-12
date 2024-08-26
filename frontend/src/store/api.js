@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import routes from '../utils/routes.js';
 
 export const api = createApi({
+  reducerPath: 'queryApi',
   baseQuery: fetchBaseQuery({
     baseUrl: routes.apiPath,
     tagTypes: ['Channel', 'Message'],

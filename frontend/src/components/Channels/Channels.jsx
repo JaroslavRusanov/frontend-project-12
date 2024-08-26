@@ -1,8 +1,8 @@
 import { Spinner, Dropdown, ButtonGroup } from 'react-bootstrap';
 import cn from 'classnames';
-import { useGetChannelsQuery } from '../../RTKQueryAPI/api.js';
+import { useGetChannelsQuery } from '../../store/api.js';
 
-const Channels = ({ activeChannel, setActiveChannel, handleModal }) => {
+const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
   const { data, error, isLoading } = useGetChannelsQuery();
 
   return (
@@ -32,7 +32,7 @@ const Channels = ({ activeChannel, setActiveChannel, handleModal }) => {
           return (
             <li key={channel.id} className="nav-item w-100">
               <Dropdown as={ButtonGroup} className="d-flex">
-                <button type="button" className={classNamesButton} onClick={() => setActiveChannel(channel)}>
+                <button type="button" className={classNamesButton} onClick={() => activeChannnelClick(channel)}>
                   <span className="me-1">#</span>
                   {channel.name}
                 </button>
@@ -50,7 +50,7 @@ const Channels = ({ activeChannel, setActiveChannel, handleModal }) => {
 
         return (
           <li key={channel.id} className="nav-item w-100">
-            <button type="button" className={classNamesButton} onClick={() => setActiveChannel(channel)}>
+            <button type="button" className={classNamesButton} onClick={() => activeChannnelClick(channel)}>
               <span className="me-1">#</span>
               {channel.name}
             </button>

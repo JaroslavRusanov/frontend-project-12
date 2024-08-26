@@ -3,13 +3,12 @@ import {
   useRemoveChannelMutation,
   useRemoveMessageMutation,
   useGetMessagesQuery,
-} from '../../RTKQueryAPI/api.js';
+} from '../../store/api.js';
 
 const Remove = ({
   modalType,
   closeModal,
-  setActiveChannel,
-  defaultChannel,
+  activeChannnelClick,
 }) => {
   // HOOKS
   const currentChannelId = modalType.currentChannel.id;
@@ -25,11 +24,17 @@ const Remove = ({
       });
   };
 
+  const defaultChannel = {
+    id: 1,
+    name: 'general',
+    removable: false,
+  };
+
   const handleDelete = async () => {
     try {
       await removeChannel(currentChannelId);
       removeChannelsMessages(data);
-      setActiveChannel(defaultChannel);
+      activeChannnelClick(defaultChannel);
       closeModal();
     } catch (e) {
       console.log(e);

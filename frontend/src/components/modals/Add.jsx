@@ -1,11 +1,11 @@
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { useAddChannelMutation, useGetChannelsQuery } from '../../RTKQueryAPI/api.js';
+import { useAddChannelMutation, useGetChannelsQuery } from '../../store/api.js';
 
 const Add = ({
   closeModal,
-  setActiveChannel,
+  activeChannnelClick,
   errorValidation,
   setErrorValidation,
 }) => {
@@ -27,7 +27,7 @@ const Add = ({
         await channelSchema.validate(values);
         // ADD CHANNEL
         const newChannel = await addChannel({ name: values.body });
-        setActiveChannel(newChannel.data);
+        activeChannnelClick(newChannel.data);
         setErrorValidation({ isInvalid: false, error: '' });
         closeModal();
       } catch (e) {
