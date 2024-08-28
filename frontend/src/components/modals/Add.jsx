@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
@@ -12,6 +13,7 @@ const Add = ({
   // HOOKS
   const [addChannel] = useAddChannelMutation();
   const { data } = useGetChannelsQuery();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -39,7 +41,7 @@ const Add = ({
   return (
     <Modal show="true" onHide={closeModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modal.add.title')}</Modal.Title>
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
@@ -57,8 +59,8 @@ const Add = ({
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={closeModal}>Отменить</Button>
-          <Button variant="primary" type="submit">Отправить</Button>
+          <Button variant="secondary" type="button" onClick={closeModal}>{t('modal.add.cancelButton')}</Button>
+          <Button variant="primary" type="submit">{t('modal.add.sendButton')}</Button>
         </Modal.Footer>
       </Form>
     </Modal>

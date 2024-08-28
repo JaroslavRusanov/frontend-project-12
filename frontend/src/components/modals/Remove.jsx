@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { Modal, FormGroup } from 'react-bootstrap';
 import {
   useRemoveChannelMutation,
   useRemoveMessageMutation,
   useGetMessagesQuery,
 } from '../../store/api.js';
+import defaultChannel from '../../utils/defaultChannel.js';
 
 const Remove = ({
   modalType,
@@ -15,19 +17,15 @@ const Remove = ({
   const [removeChannel] = useRemoveChannelMutation();
   const [removeMessage] = useRemoveMessageMutation();
   const { data } = useGetMessagesQuery();
+  const { t } = useTranslation();
 
   const removeChannelsMessages = async (messages) => {
     messages
       .filter(({ channelID }) => channelID === currentChannelId)
       .forEach(async (message) => {
+        console.log(message);
         await removeMessage(message.id);
       });
-  };
-
-  const defaultChannel = {
-    id: 1,
-    name: 'general',
-    removable: false,
   };
 
   const handleDelete = async () => {
@@ -35,6 +33,7 @@ const Remove = ({
       await removeChannel(currentChannelId);
       removeChannelsMessages(data);
       activeChannnelClick(defaultChannel);
+      console.log(data);
       closeModal();
     } catch (e) {
       console.log(e);
@@ -44,13 +43,13 @@ const Remove = ({
   return (
     <Modal show="true" onHide={closeModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('modal.remove.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="lead">Уверены?</p>
+        <p className="lead">{t('modal.remove.body')}</p>
         <FormGroup className="d-flex justify-content-end">
-          <button type="button" className="me-2 btn btn-secondary" onClick={closeModal}>Отменить</button>
-          <button type="button" className="btn btn-danger" onClick={handleDelete}>Удалить</button>
+          <button type="button" className="me-2 btn btn-secondary" onClick={closeModal}>{t('modal.remove.cancelButton')}</button>
+          <button type="button" className="btn btn-danger" onClick={handleDelete}>{t('modal.remove.removeButton')}</button>
         </FormGroup>
       </Modal.Body>
     </Modal>

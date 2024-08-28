@@ -1,13 +1,17 @@
 import { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Messages from './Messages.jsx';
 import MessageInput from './MessageInput.jsx';
 
 const ChatBox = ({ activeChannel, messages }) => {
+  const { t } = useTranslation();
   const getCounterMessagesById = (id) => (
     messages
       .filter(({ channelID }) => channelID === id)
       .length
   );
+
+  const counterMessages = getCounterMessagesById(activeChannel.id);
 
   const inputEl = useRef(null);
 
@@ -26,7 +30,7 @@ const ChatBox = ({ activeChannel, messages }) => {
             </b>
           </p>
           <span className="text-muted">
-            {`${getCounterMessagesById(activeChannel.id)} сообщений`}
+            {t('chatBox.messages', { count: counterMessages })}
           </span>
         </div>
         <Messages activeChannel={activeChannel} messages={messages} />

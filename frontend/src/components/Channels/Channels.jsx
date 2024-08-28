@@ -1,9 +1,11 @@
 import { Spinner, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { useGetChannelsQuery } from '../../store/api.js';
 
 const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
   const { data, error, isLoading } = useGetChannelsQuery();
+  const { t } = useTranslation();
 
   return (
     <ul
@@ -40,8 +42,12 @@ const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
                 <Dropdown.Toggle split variant="none" className={classNamesToggle} id="dropdown-split-basic" />
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleModal('removing', channel)}>Удалить</Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleModal('renaming', channel)}>Переименовать</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleModal('removing', channel)}>
+                    {t('channels.removeButton')}
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleModal('renaming', channel)}>
+                    {t('channels.renameButton')}
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </li>

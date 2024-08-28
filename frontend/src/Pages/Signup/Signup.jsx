@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import logo from '../../assets/avatar.jpg';
@@ -9,8 +10,8 @@ import { useAddNewUserMutation } from '../../store/api.js';
 
 const Signup = () => {
   // HOOKS
-  const [errorSignup, setErrorSignUp] = useState({ isInvalid: false, error: '' });
-  const [addNewUser] = useAddNewUserMutation();
+  const [errorSignup, setErrorSignUp] = useState(false);
+  const [addNewUser, { error }] = useAddNewUserMutation();
   const navigate = useNavigate();
   const location = useLocation();
   const { logIn } = useAuth();
@@ -19,26 +20,45 @@ const Signup = () => {
     inputRef.current.focus();
   }, [inputRef]);
 
+  const { t } = useTranslation();
+
   const fromPage = location?.state?.from?.pathname || '/';
 
   const onHandleSubmit = async (values) => {
     try {
       const { data } = await addNewUser({ username: values.username, password: values.password });
+      console.log(data);
       localStorage.setItem('userId', data.token);
       localStorage.setItem('userName', data.username);
       logIn();
       navigate(fromPage);
-      setErrorSignUp({ isInvalid: false, error: '' });
+      setErrorSignUp(false);
     } catch (e) {
-      setErrorSignUp({ isInvalid: true, error: e.message });
-      console.log(errorSignup);
+      setErrorSignUp(true);
+      console.log(error);
     }
   };
 
   const signupSchema = yup.object().shape({
-    username: yup.string().min(3).max(20).required('Обязательное поле'),
-    password: yup.string().min(6).required(),
-    confirmPassword: yup.string().oneOf([yup.ref('password')]).required(),
+    username: yup
+      .string()
+      .min(3, t('signupPage.form.errors.usernameRange'))
+      .max(20, t('signupPage.form.errors.usernameRange'))
+      .required(t('signupPage.form.errors.required')),
+    password: yup
+      .string()
+      .min(6, t('signupPage.form.errors.passwordRange'))
+      .required(t('signupPage.form.errors.required')),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref('password')], t('signupPage.form.errors.passwordConfirm'))
+      .required(t('signupPage.form.errors.required'))
+      .test('userExsist', t('signupPage.form.errors.usernameExist'), () => {
+        if (errorSignup) {
+          return false;
+        }
+        return true;
+      }),
   });
 
   return (
@@ -62,14 +82,14 @@ const Signup = () => {
               <div className="card shadow-sm">
                 <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
                   <div>
-                    <img src={logo} className="rounded-circle" alt="Регистрация" />
+                    <img src={logo} className="rounded-circle" alt={t('signupPage.logoAlt')} />
                   </div>
                   <Form className="w-50" onSubmit={handleSubmit}>
                     <Form.Group controlId="validationUsername">
-                      <h1 className="text-center mb-4">Регистрация</h1>
-                      <FloatingLabel className="form-floating mb-3" label="Имя пользователя">
+                      <h1 className="text-center mb-4">{t('signupPage.header')}</h1>
+                      <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.username')}>
                         <Form.Control
-                          placeholder="От 3 до 20 символов"
+                          placeholder={t('signupPage.form.username')}
                           name="username"
                           autoComplete="username"
                           className="form-control"
@@ -83,9 +103,9 @@ const Signup = () => {
                       </FloatingLabel>
                     </Form.Group>
                     <Form.Group controlId="validationPassword">
-                      <FloatingLabel className="form-floating mb-3" label="Пароль">
+                      <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.password')}>
                         <Form.Control
-                          placeholder="Не менее 6 символов"
+                          placeholder={t('signupPage.form.password')}
                           name="password"
                           type="password"
                           className="form-control"
@@ -98,9 +118,9 @@ const Signup = () => {
                       </FloatingLabel>
                     </Form.Group>
                     <Form.Group controlId="validationConfirmPassword">
-                      <FloatingLabel className="form-floating mb-4" label="Подтвердите пароль">
+                      <FloatingLabel className="form-floating mb-4" label={t('signupPage.form.confirmPassword')}>
                         <Form.Control
-                          placeholder="Пароли должны совпадать"
+                          placeholder={t('signupPage.form.confirmPassword')}
                           name="confirmPassword"
                           type="password"
                           className="form-control"
@@ -112,7 +132,7 @@ const Signup = () => {
                         <Form.Control.Feedback type="invalid" tooltip>{errors.confirmPassword}</Form.Control.Feedback>
                       </FloatingLabel>
                     </Form.Group>
-                    <button type="submit" className="w-100 btn btn-outline-primary">Зарегистрироваться</button>
+                    <button type="submit" className="w-100 btn btn-outline-primary">{t('signupPage.form.button')}</button>
                   </Form>
                 </div>
               </div>

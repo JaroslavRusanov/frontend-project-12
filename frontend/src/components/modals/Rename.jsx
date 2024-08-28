@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
@@ -13,6 +14,7 @@ const Rename = ({
   // HOOKS
   const [editChannel] = useEditChannelMutation();
   const { data } = useGetChannelsQuery();
+  const { t } = useTranslation();
 
   const currentChannelId = modalType.currentChannel.id;
 
@@ -42,7 +44,7 @@ const Rename = ({
   return (
     <Modal show="true" onHide={closeModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modal.rename.title')}</Modal.Title>
       </Modal.Header>
       <form onSubmit={formik.handleSubmit}>
         <Modal.Body>
@@ -62,8 +64,8 @@ const Rename = ({
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={closeModal}>Отменить</Button>
-          <Button variant="primary" type="submit">Отправить</Button>
+          <Button variant="secondary" type="button" onClick={closeModal}>{t('modal.rename.cancelButton')}</Button>
+          <Button variant="primary" type="submit">{t('modal.rename.sendButton')}</Button>
         </Modal.Footer>
       </form>
     </Modal>

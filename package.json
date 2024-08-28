@@ -12,6 +12,7 @@
   "author": "Iaroslav Rusanov sco.nuff@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.3"
+    "@hexlet/chat-server": "^2.0.3",
+    "react-i18next": "^15.0.1"
   }
 }

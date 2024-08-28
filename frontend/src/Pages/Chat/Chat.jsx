@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { activeChannelSelector, setActiveChannel } from '../../store/Slices/channels.js';
 import { messagesSelector } from '../../store/Slices/messages.js';
 import Channels from '../../components/Channels/Channels.jsx';
@@ -40,7 +41,7 @@ const Chat = () => {
   const messages = useSelector(messagesSelector);
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
-  // const [messages, setMessages] = useState([]);
+  const { t } = useTranslation();
 
   const handleModal = (type, currentChannel) => (
     currentChannel
@@ -53,7 +54,7 @@ const Chat = () => {
       <div className="row h-100 bg-white flex-md-row">
         <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
           <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-            <b>Каналы</b>
+            <b>{t('chatPage.header')}</b>
             <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => handleModal('adding')}>
               <ChannelButtonSVG />
               <span className="visually-hidden">+</span>

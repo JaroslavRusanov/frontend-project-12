@@ -1,12 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useAddMessageMutation } from '../../store/api.js';
 import MessageInputButton from '../../assets/MessageInputButtonSVG.jsx';
 
 const MessageInput = ({ inputEl, channelID }) => {
-  const username = localStorage.getItem('userName');
-
+// HOOKS
+  const { t } = useTranslation();
   const [addMessage] = useAddMessageMutation();
+
+  const username = localStorage.getItem('userName');
 
   const formik = useFormik({
     initialValues: {
@@ -30,8 +33,8 @@ const MessageInput = ({ inputEl, channelID }) => {
           <Form.Control
             id="body"
             name="body"
-            aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
+            aria-label={t('messageInput.label')}
+            placeholder={t('messageInput.placeholder')}
             className="border-0 p-0 ps-2 form-control"
             onChange={formik.handleChange}
             value={formik.body}
@@ -39,7 +42,7 @@ const MessageInput = ({ inputEl, channelID }) => {
           />
           <button type="submit" disabled="" className="btn btn-group-vertical">
             <MessageInputButton />
-            <span className="visually-hidden">Отправить</span>
+            <span className="visually-hidden">{t('messageInput.button')}</span>
           </button>
         </div>
       </Form>
