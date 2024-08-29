@@ -70,6 +70,10 @@ export default {
         cancelButton: 'Cancel',
         sendButton: 'Send',
       },
+      validation: {
+        notOneOf: 'Must be unique',
+        range: 'At least 3 to 20 characters',
+      },
     },
     toastify: {
       error: {

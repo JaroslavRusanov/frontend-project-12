@@ -71,6 +71,10 @@ export default {
         cancelButton: 'Отменить',
         sendButton: 'Отправить',
       },
+      validation: {
+        notOneOf: 'Должно быть уникальным',
+        range: 'От 3 до 20 символов',
+      },
     },
     toastify: {
       error: {

@@ -26,7 +26,10 @@ const Add = ({
       try {
         // VALIDATION BY YUP
         const channelSchema = object({
-          body: string().min(3).max(20).notOneOf(channelsNames),
+          body: string()
+            .min(3, t('modal.validation.range'))
+            .max(20, t('modal.validation.range'))
+            .notOneOf(channelsNames, t('modal.validation.notOneOf')),
         });
         await channelSchema.validate(values);
         // ADD CHANNEL
