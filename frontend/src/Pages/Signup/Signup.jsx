@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { Form, FloatingLabel } from 'react-bootstrap';
 import logo from '../../assets/avatar.jpg';
@@ -26,6 +27,7 @@ const Signup = () => {
   const isErrStatus409 = (responseErr) => responseErr && responseErr.status === 409;
 
   const onHandleSubmit = async (values) => {
+    console.log('boom');
     try {
       const { data } = await addNewUser({ username: values.username, password: values.password });
       localStorage.setItem('userId', data.token);
@@ -33,7 +35,7 @@ const Signup = () => {
       logIn();
       navigate(fromPage);
     } catch (err) {
-      console.log(err);
+      toast.error(t('toastify.error.connectionErr'));
       throw err;
     }
   };
