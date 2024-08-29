@@ -23,7 +23,7 @@ const Signup = () => {
 
   const fromPage = location?.state?.from?.pathname || '/';
 
-  const isErrStatus409 = (responseErr) => responseErr.status === 409 && responseErr;
+  const isErrStatus409 = (responseErr) => responseErr && responseErr.status === 409;
 
   const onHandleSubmit = async (values) => {
     try {
