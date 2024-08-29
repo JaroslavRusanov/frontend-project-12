@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { setMessages, messagesSelector } from './store/Slices/messages.js';
 import socket from './utils/socket.js';
 import AuthProvider from './auth/AuthProvider.jsx';
@@ -26,12 +28,28 @@ const App = () => {
       const newMessages = [...messages, data];
       dispatch(setMessages(newMessages));
     });
-  }, [messages]);
+    return () => {
+      socket.off();
+    };
+  }, [messages, dispatch]);
 
   return (
     <AuthProvider>
       <BrowserRouter>
         <div className="h-100" id="chat">
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
           <div className="d-flex flex-column h-100">
             <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
               <div className="container">

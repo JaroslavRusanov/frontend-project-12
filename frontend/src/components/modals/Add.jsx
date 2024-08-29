@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
@@ -31,9 +32,12 @@ const Add = ({
         const newChannel = await addChannel({ name: values.body });
         activeChannnelClick(newChannel.data);
         setErrorValidation({ isInvalid: false, error: '' });
+        toast.success(t('toastify.success.channel.add'));
         closeModal();
-      } catch (e) {
-        setErrorValidation({ isInvalid: true, error: e.message });
+      } catch (err) {
+        setErrorValidation({ isInvalid: true, error: err.message });
+        toast.error(t('toastify.error.connectionErr'));
+        throw err;
       }
     },
   });

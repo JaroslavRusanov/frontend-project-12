@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
@@ -34,9 +35,12 @@ const Rename = ({
         const newName = await editChannel({ id: currentChannelId, name: values.body });
         activeChannnelClick(newName.data);
         setErrorValidation({ isInvalid: false, error: '' });
+        toast.success(t('toastify.success.channel.rename'));
         closeModal();
-      } catch (e) {
-        setErrorValidation({ isInvalid: true, error: e.message });
+      } catch (err) {
+        setErrorValidation({ isInvalid: true, error: err.message });
+        toast.error(t('toastify.error.connectionErr'));
+        throw err;
       }
     },
   });

@@ -72,6 +72,18 @@ export default {
         sendButton: 'Отправить',
       },
     },
+    toastify: {
+      error: {
+        connectionErr: 'Ошибка соединения',
+      },
+      success: {
+        channel: {
+          add: 'Канал создан',
+          rename: 'Канал переименован',
+          remove: 'Канал удален',
+        },
+      },
+    },
     authButton: 'Выйти',
   },
 };

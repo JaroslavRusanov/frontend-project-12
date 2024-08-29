@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,6 @@ import { useAddNewUserMutation } from '../../store/api.js';
 
 const Signup = () => {
   // HOOKS
-  const [errorSignup, setErrorSignUp] = useState(false);
   const [addNewUser, { error }] = useAddNewUserMutation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,18 +23,18 @@ const Signup = () => {
 
   const fromPage = location?.state?.from?.pathname || '/';
 
+  const isErrStatus409 = (responseErr) => responseErr.status === 409 && responseErr;
+
   const onHandleSubmit = async (values) => {
     try {
       const { data } = await addNewUser({ username: values.username, password: values.password });
-      console.log(data);
       localStorage.setItem('userId', data.token);
       localStorage.setItem('userName', data.username);
       logIn();
       navigate(fromPage);
-      setErrorSignUp(false);
-    } catch (e) {
-      setErrorSignUp(true);
-      console.log(error);
+    } catch (err) {
+      console.log(err);
+      throw err;
     }
   };
 
@@ -52,13 +51,7 @@ const Signup = () => {
     confirmPassword: yup
       .string()
       .oneOf([yup.ref('password')], t('signupPage.form.errors.passwordConfirm'))
-      .required(t('signupPage.form.errors.required'))
-      .test('userExsist', t('signupPage.form.errors.usernameExist'), () => {
-        if (errorSignup) {
-          return false;
-        }
-        return true;
-      }),
+      .required(t('signupPage.form.errors.required')),
   });
 
   return (
@@ -126,10 +119,15 @@ const Signup = () => {
                           className="form-control"
                           value={values.confirmPassword}
                           onChange={handleChange}
-                          isInvalid={errors.confirmPassword && touched.confirmPassword}
+                          isInvalid={
+                            isErrStatus409(error)
+                            || (errors.confirmPassword && touched.confirmPassword)
+                          }
                           onBlur={handleBlur}
                         />
-                        <Form.Control.Feedback type="invalid" tooltip>{errors.confirmPassword}</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid" tooltip>
+                          {errors.confirmPassword || t('signupPage.form.errors.usernameExist')}
+                        </Form.Control.Feedback>
                       </FloatingLabel>
                     </Form.Group>
                     <button type="submit" className="w-100 btn btn-outline-primary">{t('signupPage.form.button')}</button>

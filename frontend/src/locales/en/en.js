@@ -71,6 +71,18 @@ export default {
         sendButton: 'Send',
       },
     },
+    toastify: {
+      error: {
+        connectionErr: 'Connection error',
+      },
+      success: {
+        channel: {
+          add: 'Channel created',
+          rename: 'Channel renamed',
+          remove: 'Channel removed',
+        },
+      },
+    },
     authButton: 'Logout',
   },
 };

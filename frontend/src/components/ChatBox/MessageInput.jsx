@@ -19,8 +19,9 @@ const MessageInput = ({ inputEl, channelID }) => {
       try {
         const newMessage = { body, channelID, username };
         await addMessage(newMessage);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
+        throw err;
       }
     },
   });

@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useGetAuthTokenMutation } from '../../store/api.js';
 import logo from '../../assets/login.jpeg';
 import useAuth from '../../auth/hook.jsx';
@@ -31,8 +32,10 @@ const Login = () => {
         setFailAuth(false);
         logIn();
         navigate(fromPage);
-      } catch (e) {
+      } catch (err) {
         setFailAuth(true);
+        toast.error(t('toastify.error.connectionErr'));
+        throw err;
       }
     },
   });

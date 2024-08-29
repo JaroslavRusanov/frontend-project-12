@@ -1,10 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { Modal, FormGroup } from 'react-bootstrap';
-import {
-  useRemoveChannelMutation,
-  useRemoveMessageMutation,
-  useGetMessagesQuery,
-} from '../../store/api.js';
+import { useRemoveChannelMutation } from '../../store/api.js';
 import defaultChannel from '../../utils/defaultChannel.js';
 
 const Remove = ({
@@ -15,28 +12,17 @@ const Remove = ({
   // HOOKS
   const currentChannelId = modalType.currentChannel.id;
   const [removeChannel] = useRemoveChannelMutation();
-  const [removeMessage] = useRemoveMessageMutation();
-  const { data } = useGetMessagesQuery();
   const { t } = useTranslation();
-
-  const removeChannelsMessages = async (messages) => {
-    messages
-      .filter(({ channelID }) => channelID === currentChannelId)
-      .forEach(async (message) => {
-        console.log(message);
-        await removeMessage(message.id);
-      });
-  };
 
   const handleDelete = async () => {
     try {
       await removeChannel(currentChannelId);
-      removeChannelsMessages(data);
       activeChannnelClick(defaultChannel);
-      console.log(data);
+      toast.success(t('toastify.success.channel.remove'));
       closeModal();
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      toast.error(t('toastify.error.connectionErr'));
+      throw err;
     }
   };
 
