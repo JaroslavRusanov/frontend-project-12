@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import { Modal, Form, Button } from 'react-bootstrap';
@@ -29,7 +30,8 @@ const Add = ({
         });
         await channelSchema.validate(values);
         // ADD CHANNEL
-        const newChannel = await addChannel({ name: values.body });
+        const filteredName = filter.clean(values.body);
+        const newChannel = await addChannel({ name: filteredName });
         activeChannnelClick(newChannel.data);
         setErrorValidation({ isInvalid: false, error: '' });
         toast.success(t('toastify.success.channel.add'));

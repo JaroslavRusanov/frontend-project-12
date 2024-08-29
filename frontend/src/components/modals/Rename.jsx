@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -32,7 +33,8 @@ const Rename = ({
         });
         await channelSchema.validate(values);
         // EDIT CHANNEL
-        const newName = await editChannel({ id: currentChannelId, name: values.body });
+        const filteredName = filter.clean(values.body);
+        const newName = await editChannel({ id: currentChannelId, name: filteredName });
         activeChannnelClick(newName.data);
         setErrorValidation({ isInvalid: false, error: '' });
         toast.success(t('toastify.success.channel.rename'));

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import {
   BrowserRouter,
   Routes,
@@ -8,6 +9,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import filter from 'leo-profanity';
 import { setMessages, messagesSelector } from './store/Slices/messages.js';
 import socket from './utils/socket.js';
 import AuthProvider from './auth/AuthProvider.jsx';
@@ -25,6 +27,8 @@ const App = () => {
 
   useEffect(() => {
     socket.on('newMessage', (data) => {
+      filter.loadDictionary('ru');
+      data.body.body = filter.clean(data.body.body);
       const newMessages = [...messages, data];
       dispatch(setMessages(newMessages));
     });
