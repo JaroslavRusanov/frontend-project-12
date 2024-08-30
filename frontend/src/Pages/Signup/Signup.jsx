@@ -24,7 +24,6 @@ const Signup = () => {
   const isErrStatus409 = (responseErr) => responseErr && responseErr.status === 409;
 
   const onHandleSubmit = async (values) => {
-    console.log('boom');
     try {
       const { data } = await addNewUser({ username: values.username, password: values.password });
       localStorage.setItem('userId', data.token);
@@ -93,8 +92,8 @@ const Signup = () => {
                         />
                         <Form.Control.Feedback type="invalid" tooltip>{errors.username}</Form.Control.Feedback>
                       </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group controlId="validationPassword">
+                      {/* </Form.Group>
+                      <Form.Group controlId="validationPassword"> */}
                       <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.password')}>
                         <Form.Control
                           placeholder={t('signupPage.form.password')}
@@ -108,8 +107,8 @@ const Signup = () => {
                         />
                         <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
                       </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group controlId="validationConfirmPassword">
+                      {/* </Form.Group>
+                      <Form.Group controlId="validationConfirmPassword"> */}
                       <FloatingLabel className="form-floating mb-4" label={t('signupPage.form.confirmPassword')}>
                         <Form.Control
                           placeholder={t('signupPage.form.confirmPassword')}
