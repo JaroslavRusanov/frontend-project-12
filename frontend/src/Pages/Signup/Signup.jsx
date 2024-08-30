@@ -90,7 +90,7 @@ const Signup = () => {
                         isInvalid={errors.username && touched.username}
                         onBlur={handleBlur}
                       />
-                      <label className="formLabel" htmlFor="newUsername">{t('signupPage.form.username')}</label>
+                      <label className="form=label" htmlFor="newUsername">{t('signupPage.form.username')}</label>
                       <Form.Control.Feedback type="invalid" tooltip>{errors.username}</Form.Control.Feedback>
                     </div>
                     <div className="form-floating mb-3">
@@ -106,7 +106,7 @@ const Signup = () => {
                         isInvalid={errors.password && touched.password}
                         onBlur={handleBlur}
                       />
-                      <label className="formLabel" htmlFor="newPassword">{t('signupPage.form.password')}</label>
+                      <label className="form-label" htmlFor="newPassword">{t('signupPage.form.password')}</label>
                       <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
                     </div>
                     <div className="form-floating mb-4">
@@ -125,7 +125,7 @@ const Signup = () => {
                         }
                         onBlur={handleBlur}
                       />
-                      <label className="formLabel" htmlFor="newPasswordConfirmation">{t('signupPage.form.confirmPassword')}</label>
+                      <label className="form-label" htmlFor="newPasswordConfirmation">{t('signupPage.form.confirmPassword')}</label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.confirmPassword || t('signupPage.form.errors.usernameExist')}
                       </Form.Control.Feedback>

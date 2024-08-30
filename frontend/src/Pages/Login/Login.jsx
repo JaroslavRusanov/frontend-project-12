@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { Form, Button, FloatingLabel } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useGetAuthTokenMutation } from '../../store/api.js';
@@ -52,10 +52,7 @@ const Login = () => {
               <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
                 <Form.Group>
                   <h1 className="text-center mb-4">{t('loginPage.header')}</h1>
-                  <FloatingLabel
-                    className="form-floating mb-3"
-                    label={t('loginPage.form.username')}
-                  >
+                  <div className="form-floating mb-3">
                     <Form.Control
                       id="username"
                       name="username"
@@ -67,11 +64,9 @@ const Login = () => {
                       isInvalid={isInvalidAuth}
                       defaultValue={formik.values.username}
                     />
-                  </FloatingLabel>
-                  <FloatingLabel
-                    className="form-floating mb-4"
-                    label={t('loginPage.form.password')}
-                  >
+                    <label htmlFor="username">{t('loginPage.form.username')}</label>
+                  </div>
+                  <div className="form-floating mb-4">
                     <Form.Control
                       id="password"
                       name="password"
@@ -84,8 +79,9 @@ const Login = () => {
                       defaultValue={formik.values.password}
                       isInvalid={isInvalidAuth}
                     />
+                    <label htmlFor="password">{t('loginPage.form.password')}</label>
                     <Form.Control.Feedback type="invalid" tooltip>{t('loginPage.form.error')}</Form.Control.Feedback>
-                  </FloatingLabel>
+                  </div>
                 </Form.Group>
                 <Button type="submit" variant="outline-primary" className="w-100 mb-3">{t('loginPage.form.button')}</Button>
               </Form>
