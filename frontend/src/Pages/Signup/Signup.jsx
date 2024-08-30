@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Formik } from 'formik';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
@@ -13,7 +13,7 @@ const Signup = () => {
   // HOOKS
   const [addNewUser, { error }] = useAddNewUserMutation();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const { logIn } = useAuth();
   const inputRef = useRef(null);
   useEffect(() => {
@@ -22,7 +22,7 @@ const Signup = () => {
 
   const { t } = useTranslation();
 
-  const fromPage = location?.state?.from?.pathname || '/';
+  // const fromPage = location?.state?.from?.pathname || '/';
 
   const isErrStatus409 = (responseErr) => responseErr && responseErr.status === 409;
 
@@ -33,7 +33,7 @@ const Signup = () => {
       localStorage.setItem('userId', data.token);
       localStorage.setItem('userName', data.username);
       logIn();
-      navigate(fromPage);
+      navigate('/');
     } catch (err) {
       toast.error(t('toastify.error.connectionErr'));
       throw err;
