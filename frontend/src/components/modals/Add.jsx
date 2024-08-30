@@ -62,7 +62,6 @@ const Add = ({
               data-testid="input-body"
               onChange={formik.handleChange}
               value={formik.values.body}
-              required
               isInvalid={errorValidation.isInvalid}
             />
             <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>

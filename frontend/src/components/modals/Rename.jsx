@@ -60,16 +60,15 @@ const Rename = ({
         <Modal.Body>
           <Form.Group>
             <Form.Control
-              id="body"
+              id="name"
               name="body"
               type="text"
               data-testid="input-body"
               onChange={formik.handleChange}
               value={formik.values.body}
-              required
               isInvalid={errorValidation.isInvalid}
             />
-            <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
+            <label htmlFor="name" className="visually-hidden">{t('modal.label')}</label>
             <Form.Control.Feedback type="invalid" tooltip>{errorValidation.error}</Form.Control.Feedback>
           </Form.Group>
         </Modal.Body>
