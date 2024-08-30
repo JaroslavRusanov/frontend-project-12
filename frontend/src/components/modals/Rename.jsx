@@ -36,6 +36,7 @@ const Rename = ({
         });
         await channelSchema.validate(values);
         // EDIT CHANNEL
+        filter.loadDictionary('en');
         const filteredName = filter.clean(values.body);
         const newName = await editChannel({ id: currentChannelId, name: filteredName });
         activeChannnelClick(newName.data);

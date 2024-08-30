@@ -33,6 +33,7 @@ const Add = ({
         });
         await channelSchema.validate(values);
         // ADD CHANNEL
+        filter.loadDictionary('en');
         const filteredName = filter.clean(values.body);
         const newChannel = await addChannel({ name: filteredName });
         activeChannnelClick(newChannel.data);
