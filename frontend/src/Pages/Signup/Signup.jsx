@@ -81,6 +81,7 @@ const Signup = () => {
                       <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.username')}>
                         <Form.Control
                           placeholder={t('signupPage.form.username')}
+                          id="newUsername"
                           name="username"
                           autoComplete="username"
                           className="form-control"
@@ -92,13 +93,13 @@ const Signup = () => {
                         />
                         <Form.Control.Feedback type="invalid" tooltip>{errors.username}</Form.Control.Feedback>
                       </FloatingLabel>
-                      {/* </Form.Group>
-                      <Form.Group controlId="validationPassword"> */}
                       <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.password')}>
                         <Form.Control
                           placeholder={t('signupPage.form.password')}
+                          id="newPassword"
                           name="password"
                           type="password"
+                          autoComplete="new-password"
                           className="form-control"
                           value={values.password}
                           onChange={handleChange}
@@ -107,13 +108,13 @@ const Signup = () => {
                         />
                         <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
                       </FloatingLabel>
-                      {/* </Form.Group>
-                      <Form.Group controlId="validationConfirmPassword"> */}
                       <FloatingLabel className="form-floating mb-4" label={t('signupPage.form.confirmPassword')}>
                         <Form.Control
                           placeholder={t('signupPage.form.confirmPassword')}
+                          id="newPasswordConfirmation"
                           name="confirmPassword"
                           type="password"
+                          autoComplete="new-password"
                           className="form-control"
                           value={values.confirmPassword}
                           onChange={handleChange}
