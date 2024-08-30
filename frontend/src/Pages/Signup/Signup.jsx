@@ -76,59 +76,57 @@ const Signup = () => {
                     <img src={logo} className="rounded-circle" alt={t('signupPage.logoAlt')} />
                   </div>
                   <Form className="w-50" onSubmit={handleSubmit}>
-                    <Form.Group controlId="validationUsername">
-                      <h1 className="text-center mb-4">{t('signupPage.header')}</h1>
-                      <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.username')}>
-                        <Form.Control
-                          placeholder={t('signupPage.form.username')}
-                          id="newUsername"
-                          name="username"
-                          autoComplete="username"
-                          className="form-control"
-                          ref={inputRef}
-                          value={values.username}
-                          onChange={handleChange}
-                          isInvalid={errors.username && touched.username}
-                          onBlur={handleBlur}
-                        />
-                        <Form.Control.Feedback type="invalid" tooltip>{errors.username}</Form.Control.Feedback>
-                      </FloatingLabel>
-                      <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.password')}>
-                        <Form.Control
-                          placeholder={t('signupPage.form.password')}
-                          id="newPassword"
-                          name="password"
-                          type="password"
-                          autoComplete="new-password"
-                          className="form-control"
-                          value={values.password}
-                          onChange={handleChange}
-                          isInvalid={errors.password && touched.password}
-                          onBlur={handleBlur}
-                        />
-                        <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
-                      </FloatingLabel>
-                      <FloatingLabel className="form-floating mb-4" label={t('signupPage.form.confirmPassword')}>
-                        <Form.Control
-                          placeholder={t('signupPage.form.confirmPassword')}
-                          id="newPasswordConfirmation"
-                          name="confirmPassword"
-                          type="password"
-                          autoComplete="new-password"
-                          className="form-control"
-                          value={values.confirmPassword}
-                          onChange={handleChange}
-                          isInvalid={
-                            isErrStatus409(error)
-                            || (errors.confirmPassword && touched.confirmPassword)
-                          }
-                          onBlur={handleBlur}
-                        />
-                        <Form.Control.Feedback type="invalid" tooltip>
-                          {errors.confirmPassword || t('signupPage.form.errors.usernameExist')}
-                        </Form.Control.Feedback>
-                      </FloatingLabel>
-                    </Form.Group>
+                    <h1 className="text-center mb-4">{t('signupPage.header')}</h1>
+                    <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.username')}>
+                      <Form.Control
+                        placeholder={t('signupPage.form.username')}
+                        id="newUsername"
+                        name="username"
+                        autoComplete="username"
+                        className="form-control"
+                        ref={inputRef}
+                        value={values.username}
+                        onChange={handleChange}
+                        isInvalid={errors.username && touched.username}
+                        onBlur={handleBlur}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>{errors.username}</Form.Control.Feedback>
+                    </FloatingLabel>
+                    <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.password')}>
+                      <Form.Control
+                        placeholder={t('signupPage.form.password')}
+                        id="newPassword"
+                        name="password"
+                        type="password"
+                        autoComplete="new-password"
+                        className="form-control"
+                        value={values.password}
+                        onChange={handleChange}
+                        isInvalid={errors.password && touched.password}
+                        onBlur={handleBlur}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
+                    </FloatingLabel>
+                    <FloatingLabel className="form-floating mb-4" label={t('signupPage.form.confirmPassword')}>
+                      <Form.Control
+                        placeholder={t('signupPage.form.confirmPassword')}
+                        id="newPasswordConfirmation"
+                        name="confirmPassword"
+                        type="password"
+                        autoComplete="new-password"
+                        className="form-control"
+                        value={values.confirmPassword}
+                        onChange={handleChange}
+                        isInvalid={
+                          isErrStatus409(error)
+                          || (errors.confirmPassword && touched.confirmPassword)
+                        }
+                        onBlur={handleBlur}
+                      />
+                      <Form.Control.Feedback type="invalid" tooltip>
+                        {errors.confirmPassword || t('signupPage.form.errors.usernameExist')}
+                      </Form.Control.Feedback>
+                    </FloatingLabel>
                     <button type="submit" className="w-100 btn btn-outline-primary">{t('signupPage.form.button')}</button>
                   </Form>
                 </div>
