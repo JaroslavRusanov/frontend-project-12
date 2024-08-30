@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -36,9 +35,7 @@ const Rename = ({
         });
         await channelSchema.validate(values);
         // EDIT CHANNEL
-        filter.loadDictionary('en');
-        const filteredName = filter.clean(values.body);
-        const newName = await editChannel({ id: currentChannelId, name: filteredName });
+        const newName = await editChannel({ id: currentChannelId, name: values.body });
         activeChannnelClick(newName.data);
         setErrorValidation({ isInvalid: false, error: '' });
         toast.success(t('toastify.success.channel.rename'));
@@ -60,7 +57,7 @@ const Rename = ({
         <Modal.Body>
           <Form.Group>
             <Form.Control
-              id="name"
+              id="body"
               name="body"
               type="text"
               data-testid="input-body"
@@ -68,7 +65,7 @@ const Rename = ({
               value={formik.values.body}
               isInvalid={errorValidation.isInvalid}
             />
-            <label htmlFor="name" className="visually-hidden">{t('modal.label')}</label>
+            <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
             <Form.Control.Feedback type="invalid" tooltip>{errorValidation.error}</Form.Control.Feedback>
           </Form.Group>
         </Modal.Body>
