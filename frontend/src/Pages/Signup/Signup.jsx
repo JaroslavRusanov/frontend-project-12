@@ -13,7 +13,6 @@ const Signup = () => {
   // HOOKS
   const [addNewUser, { error }] = useAddNewUserMutation();
   const navigate = useNavigate();
-  // const location = useLocation();
   const { logIn } = useAuth();
   const inputRef = useRef(null);
   useEffect(() => {
@@ -21,8 +20,6 @@ const Signup = () => {
   }, [inputRef]);
 
   const { t } = useTranslation();
-
-  // const fromPage = location?.state?.from?.pathname || '/';
 
   const isErrStatus409 = (responseErr) => responseErr && responseErr.status === 409;
 
