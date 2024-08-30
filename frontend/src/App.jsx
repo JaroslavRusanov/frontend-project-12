@@ -28,7 +28,7 @@ const App = () => {
 
   useEffect(() => {
     socket.on('newMessage', (data) => {
-      filter.loadDictionary('ru');
+      filter.loadDictionary('en');
       data.body.body = filter.clean(data.body.body);
       const newMessages = [...messages, data];
       dispatch(setMessages(newMessages));
