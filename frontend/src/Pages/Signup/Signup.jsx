@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import { Form, FloatingLabel } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import logo from '../../assets/avatar.jpg';
 import useAuth from '../../auth/hook.jsx';
 import { useAddNewUserMutation } from '../../store/api.js';
@@ -77,7 +77,7 @@ const Signup = () => {
                   </div>
                   <Form className="w-50" onSubmit={handleSubmit}>
                     <h1 className="text-center mb-4">{t('signupPage.header')}</h1>
-                    <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.username')}>
+                    <div className="form-floating mb-3">
                       <Form.Control
                         placeholder={t('signupPage.form.username')}
                         id="newUsername"
@@ -90,9 +90,10 @@ const Signup = () => {
                         isInvalid={errors.username && touched.username}
                         onBlur={handleBlur}
                       />
+                      <label className="formLabel" htmlFor="newUsername">{t('signupPage.form.username')}</label>
                       <Form.Control.Feedback type="invalid" tooltip>{errors.username}</Form.Control.Feedback>
-                    </FloatingLabel>
-                    <FloatingLabel className="form-floating mb-3" label={t('signupPage.form.password')}>
+                    </div>
+                    <div className="form-floating mb-3">
                       <Form.Control
                         placeholder={t('signupPage.form.password')}
                         id="newPassword"
@@ -105,9 +106,10 @@ const Signup = () => {
                         isInvalid={errors.password && touched.password}
                         onBlur={handleBlur}
                       />
+                      <label className="formLabel" htmlFor="newPassword">{t('signupPage.form.password')}</label>
                       <Form.Control.Feedback type="invalid" tooltip>{errors.password}</Form.Control.Feedback>
-                    </FloatingLabel>
-                    <FloatingLabel className="form-floating mb-4" label={t('signupPage.form.confirmPassword')}>
+                    </div>
+                    <div className="form-floating mb-4">
                       <Form.Control
                         placeholder={t('signupPage.form.confirmPassword')}
                         id="newPasswordConfirmation"
@@ -123,10 +125,11 @@ const Signup = () => {
                         }
                         onBlur={handleBlur}
                       />
+                      <label className="formLabel" htmlFor="newPasswordConfirmation">{t('signupPage.form.confirmPassword')}</label>
                       <Form.Control.Feedback type="invalid" tooltip>
                         {errors.confirmPassword || t('signupPage.form.errors.usernameExist')}
                       </Form.Control.Feedback>
-                    </FloatingLabel>
+                    </div>
                     <button type="submit" className="w-100 btn btn-outline-primary">{t('signupPage.form.button')}</button>
                   </Form>
                 </div>
