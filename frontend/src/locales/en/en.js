@@ -54,6 +54,7 @@ export default {
       button: 'Send',
     },
     modal: {
+      label: 'Channel`s name',
       add: {
         title: 'Add channel',
         cancelButton: 'Cancel',

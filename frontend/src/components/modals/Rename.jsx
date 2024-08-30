@@ -69,6 +69,7 @@ const Rename = ({
               required
               isInvalid={errorValidation.isInvalid}
             />
+            <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
             <Form.Control.Feedback type="invalid" tooltip>{errorValidation.error}</Form.Control.Feedback>
           </Form.Group>
         </Modal.Body>

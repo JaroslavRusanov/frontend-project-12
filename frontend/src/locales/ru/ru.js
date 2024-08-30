@@ -55,6 +55,7 @@ export default {
       button: 'Отправить',
     },
     modal: {
+      label: 'Имя канала',
       add: {
         title: 'Добавить канал',
         cancelButton: 'Отменить',
