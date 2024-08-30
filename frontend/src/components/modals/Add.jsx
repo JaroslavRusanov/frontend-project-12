@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -32,7 +33,8 @@ const Add = ({
         });
         await channelSchema.validate(values);
         // ADD CHANNEL
-        const newChannel = await addChannel({ name: values.body });
+        const filteredName = filter.clean(values.body);
+        const newChannel = await addChannel({ name: filteredName });
         activeChannnelClick(newChannel.data);
         setErrorValidation({ isInvalid: false, error: '' });
         toast.success(t('toastify.success.channel.add'));
@@ -57,6 +59,7 @@ const Add = ({
               id="body"
               name="body"
               data-testid="input-body"
+              className="form-control mb-2"
               onChange={formik.handleChange}
               value={formik.values.body}
               isInvalid={errorValidation.isInvalid}
@@ -64,11 +67,18 @@ const Add = ({
             <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
             <Form.Control.Feedback type="invalid" tooltip>{errorValidation.error}</Form.Control.Feedback>
           </Form.Group>
+          <div className="d-flex justify-content-end">
+            <Button
+              variant="secondary"
+              type="button"
+              className="me-2"
+              onClick={closeModal}
+            >
+              {t('modal.add.cancelButton')}
+            </Button>
+            <Button variant="primary" type="submit">{t('modal.add.sendButton')}</Button>
+          </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={closeModal}>{t('modal.add.cancelButton')}</Button>
-          <Button variant="primary" type="submit">{t('modal.add.sendButton')}</Button>
-        </Modal.Footer>
       </Form>
     </Modal>
   );

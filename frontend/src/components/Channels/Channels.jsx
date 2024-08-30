@@ -1,6 +1,5 @@
 import { Spinner, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import filter from 'leo-profanity';
 import cn from 'classnames';
 import { useGetChannelsQuery } from '../../store/api.js';
 
@@ -15,7 +14,6 @@ const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
     >
       {isLoading && <Spinner animation="border" />}
       {data && Object.entries(data).map(([, channel]) => {
-        const filteredName = filter.clean(channel.name);
         const classNamesButton = cn(
           'w-100',
           'rounded-0',
@@ -38,7 +36,7 @@ const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
               <Dropdown as={ButtonGroup} className="d-flex">
                 <button type="button" className={classNamesButton} onClick={() => activeChannnelClick(channel)}>
                   <span className="me-1">#</span>
-                  {filteredName}
+                  {channel.name}
                 </button>
 
                 <Dropdown.Toggle split variant="none" className={classNamesToggle} id="dropdown-split-basic" />
