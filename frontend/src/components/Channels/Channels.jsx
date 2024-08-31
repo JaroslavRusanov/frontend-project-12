@@ -39,7 +39,14 @@ const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
                   {channel.name}
                 </button>
 
-                <Dropdown.Toggle split variant="none" className={classNamesToggle} id="dropdown-split-basic" />
+                <Dropdown.Toggle
+                  split
+                  variant="none"
+                  className={classNamesToggle}
+                  id="dropdown-split-basic"
+                >
+                  <span className="visually-hidden">Управление каналом</span>
+                </Dropdown.Toggle>
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => handleModal('removing', channel)}>
