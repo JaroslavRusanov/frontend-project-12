@@ -85,7 +85,7 @@ export default {
         channel: {
           add: 'Канал создан',
           rename: 'Канал переименован',
-          remove: 'Канал удален',
+          remove: 'Канал удалён',
         },
       },
     },
