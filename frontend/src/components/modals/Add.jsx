@@ -66,18 +66,18 @@ const Add = ({
             />
             <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
             <div className="invalid-feedback">{errorValidation.error}</div>
+            <div className="d-flex justify-content-end">
+              <Button
+                variant="secondary"
+                type="button"
+                className="me-2"
+                onClick={closeModal}
+              >
+                {t('modal.add.cancelButton')}
+              </Button>
+              <Button variant="primary" type="submit">{t('modal.add.sendButton')}</Button>
+            </div>
           </Form.Group>
-          <div className="d-flex justify-content-end">
-            <Button
-              variant="secondary"
-              type="button"
-              className="me-2"
-              onClick={closeModal}
-            >
-              {t('modal.add.cancelButton')}
-            </Button>
-            <Button variant="primary" type="submit">{t('modal.add.sendButton')}</Button>
-          </div>
         </Modal.Body>
       </Form>
     </Modal>
