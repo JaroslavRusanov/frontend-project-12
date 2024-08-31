@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -35,7 +36,8 @@ const Rename = ({
         });
         await channelSchema.validate(values);
         // EDIT CHANNEL
-        const newName = await editChannel({ id: currentChannelId, name: values.body });
+        const filteredName = filter.clean(values.body);
+        const newName = await editChannel({ id: currentChannelId, name: filteredName });
         activeChannnelClick(newName.data);
         setErrorValidation({ isInvalid: false, error: '' });
         toast.success(t('toastify.success.channel.rename'));
@@ -53,7 +55,7 @@ const Rename = ({
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.rename.title')}</Modal.Title>
       </Modal.Header>
-      <form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
           <Form.Group>
             <Form.Control
@@ -61,20 +63,27 @@ const Rename = ({
               name="body"
               type="text"
               data-testid="input-body"
+              className="form-control mb-2"
               onChange={formik.handleChange}
               value={formik.values.body}
               isInvalid={errorValidation.isInvalid}
             />
             <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
-            <Form.Control.Feedback type="invalid" tooltip>{errorValidation.error}</Form.Control.Feedback>
+            <div className="invalid-feedback">{errorValidation.error}</div>
+            <div className="d-flex justify-content-end">
+              <Button
+                variant="secondary"
+                type="button"
+                className="me-2"
+                onClick={closeModal}
+              >
+                {t('modal.rename.cancelButton')}
+              </Button>
+              <Button variant="primary" type="submit">{t('modal.rename.sendButton')}</Button>
+            </div>
           </Form.Group>
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={closeModal}>{t('modal.rename.cancelButton')}</Button>
-          <Button variant="primary" type="submit">{t('modal.rename.sendButton')}</Button>
-        </Modal.Footer>
-      </form>
+      </Form>
     </Modal>
   );
 };

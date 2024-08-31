@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
@@ -32,7 +33,8 @@ const Add = ({
         });
         await channelSchema.validate(values);
         // ADD CHANNEL
-        const newChannel = await addChannel({ name: values.body });
+        const filteredName = filter.clean(values.body);
+        const newChannel = await addChannel({ name: filteredName });
         activeChannnelClick(newChannel.data);
         setErrorValidation({ isInvalid: false, error: '' });
         toast.success(t('toastify.success.channel.add'));
@@ -63,7 +65,7 @@ const Add = ({
               isInvalid={errorValidation.isInvalid}
             />
             <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
-            <Form.Control.Feedback type="invalid" tooltip>{errorValidation.error}</Form.Control.Feedback>
+            <div className="invalid-feedback">{errorValidation.error}</div>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button
