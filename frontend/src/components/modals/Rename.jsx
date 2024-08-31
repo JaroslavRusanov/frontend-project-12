@@ -59,7 +59,7 @@ const Rename = ({
         <Modal.Body>
           <Form.Group>
             <Form.Control
-              id="body"
+              id="renameChannel"
               name="body"
               type="text"
               data-testid="input-body"
@@ -68,7 +68,7 @@ const Rename = ({
               value={formik.values.body}
               isInvalid={errorValidation.isInvalid}
             />
-            <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
+            <label htmlFor="renameChannel" className="visually-hidden">{t('modal.label')}</label>
             <div className="invalid-feedback">{errorValidation.error}</div>
             <div className="d-flex justify-content-end">
               <Button

@@ -56,7 +56,7 @@ const Add = ({
         <Modal.Body>
           <Form.Group>
             <Form.Control
-              id="body"
+              id="addChannel"
               name="body"
               data-testid="input-body"
               className="form-control mb-2"
@@ -64,7 +64,7 @@ const Add = ({
               value={formik.values.body}
               isInvalid={errorValidation.isInvalid}
             />
-            <label htmlFor="body" className="visually-hidden">{t('modal.label')}</label>
+            <label htmlFor="addChannel" className="visually-hidden">{t('modal.label')}</label>
             <div className="invalid-feedback">{errorValidation.error}</div>
             <div className="d-flex justify-content-end">
               <Button
