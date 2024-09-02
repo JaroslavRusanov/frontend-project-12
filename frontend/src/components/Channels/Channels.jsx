@@ -1,10 +1,13 @@
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import { useGetChannelsQuery } from '../../store/api.js';
+import { channelsSelector } from '../../store/Slices/channels.js';
 
 const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
   const { data, error } = useGetChannelsQuery();
+  const channels = useSelector(channelsSelector);
   const { t } = useTranslation();
 
   return (
@@ -12,7 +15,7 @@ const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
       id="channels-box"
       className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
     >
-      {data && Object.entries(data).map(([, channel]) => {
+      {data && channels.map((channel) => {
         const classNamesButton = cn(
           'w-100',
           'rounded-0',

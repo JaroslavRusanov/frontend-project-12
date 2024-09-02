@@ -52,9 +52,6 @@ const App = () => {
       const newMessages = [...messages, checkMessage(payload)];
       dispatch(setMessages(newMessages));
     });
-    return () => {
-      socket.off();
-    };
   }, [messages, dispatch]);
 
   useEffect(() => {
@@ -75,9 +72,6 @@ const App = () => {
       });
       dispatch(setChannels(renamedChannels));
     });
-    return () => {
-      socket.off();
-    };
   }, [channels, dispatch]);
 
   return (

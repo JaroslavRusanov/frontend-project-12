@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import socket from '../utils/socket.js';
 import routes from '../utils/routes.js';
 
 export const api = createApi({
@@ -35,46 +34,6 @@ export const api = createApi({
         url: routes.channelsPath,
       }),
       providesTags: ['Channels'],
-      async onCacheEntryAdded(
-        arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
-      ) {
-        await cacheDataLoaded;
-
-        const newChannelListener = (channel) => {
-          updateCachedData((draft) => {
-            draft.push(channel);
-          });
-        };
-
-        const updateChannelListener = ({ id, name }) => {
-          updateCachedData((draft) => {
-            const channel = draft.find((el) => el.id === id);
-            if (channel) {
-              channel.name = name;
-            }
-          });
-        };
-
-        const removeChannelListener = (id) => {
-          updateCachedData((draft) => {
-            const index = draft.findIndex((el) => el.id === id);
-            if (index === -1) {
-              draft.splice(index, 1);
-            }
-          });
-        };
-
-        socket.on('newChannel', newChannelListener);
-        socket.on('renameChannel', updateChannelListener);
-        socket.on('removeChannel', removeChannelListener);
-
-        await cacheEntryRemoved;
-
-        socket.off('newChannel', newChannelListener);
-        socket.off('renameChannel', updateChannelListener);
-        socket.off('removeChannel', removeChannelListener);
-      },
     }),
     addChannel: builder.mutation({
       query: (channel) => ({
