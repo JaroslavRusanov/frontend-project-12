@@ -5,7 +5,6 @@ import { useAddMessageMutation } from '../../store/api.js';
 import MessageInputButton from '../../assets/MessageInputButtonSVG.jsx';
 
 const MessageInput = ({ inputEl, channelID }) => {
-// HOOKS
   const { t } = useTranslation();
   const [addMessage] = useAddMessageMutation();
 

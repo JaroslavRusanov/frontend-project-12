@@ -1,10 +1,14 @@
 import { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import Messages from './Messages.jsx';
 import MessageInput from './MessageInput.jsx';
+import { messagesSelector } from '../../store/Slices/messages.js';
 
-const ChatBox = ({ activeChannel, messages }) => {
+const ChatBox = ({ activeChannel }) => {
   const { t } = useTranslation();
+  const messages = useSelector(messagesSelector);
+
   const getCounterMessagesById = (id) => (
     messages
       .filter(({ channelID }) => channelID === id)

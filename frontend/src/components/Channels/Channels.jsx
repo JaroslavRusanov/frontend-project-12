@@ -1,10 +1,10 @@
-import { Spinner, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { useGetChannelsQuery } from '../../store/api.js';
 
 const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
-  const { data, error, isLoading } = useGetChannelsQuery();
+  const { data, error } = useGetChannelsQuery();
   const { t } = useTranslation();
 
   return (
@@ -12,7 +12,6 @@ const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
       id="channels-box"
       className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
     >
-      {isLoading && <Spinner animation="border" />}
       {data && Object.entries(data).map(([, channel]) => {
         const classNamesButton = cn(
           'w-100',

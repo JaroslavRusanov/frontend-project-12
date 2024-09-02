@@ -1,9 +1,16 @@
-import Spinner from 'react-bootstrap/Spinner';
+import filter from 'leo-profanity';
+import { useEffect, useRef } from 'react';
 
 const Messages = ({ activeChannel, messages }) => {
   const activeChannelID = activeChannel.id;
+  const scrollRef = useRef(null);
+  const scrollDown = () => {
+    scrollRef.current.scrollIntoView();
+  };
 
-  if (!messages) return <Spinner animation="border" />;
+  useEffect(() => {
+    scrollDown();
+  });
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
@@ -14,9 +21,10 @@ const Messages = ({ activeChannel, messages }) => {
             <b>
               {message.username}
             </b>
-            {`: ${message.body.body}`}
+            {`: ${filter.clean(message.body.body)}`}
           </div>
         ))}
+      <div ref={scrollRef} />
     </div>
   );
 };

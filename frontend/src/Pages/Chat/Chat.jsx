@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Spinner } from 'react-bootstrap';
 import { activeChannelSelector, setActiveChannel } from '../../store/Slices/channels.js';
-import { messagesSelector } from '../../store/Slices/messages.js';
+import { useGetMessagesQuery } from '../../store/api.js';
 import Channels from '../../components/Channels/Channels.jsx';
 import ChatBox from '../../components/ChatBox/ChatBox.jsx';
 import ChannelButtonSVG from '../../assets/ChannelButtonSVG.jsx';
@@ -32,13 +33,12 @@ const renderModal = (
 };
 
 const Chat = () => {
-  // HOOKS
   const activeChannel = useSelector(activeChannelSelector);
   const dispatch = useDispatch();
   const activeChannnelClick = (channel) => {
     dispatch(setActiveChannel(channel));
   };
-  const messages = useSelector(messagesSelector);
+  const { data, isLoading } = useGetMessagesQuery();
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
   const { t } = useTranslation();
@@ -51,30 +51,33 @@ const Chat = () => {
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      <div className="row h-100 bg-white flex-md-row">
-        <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
-          <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-            <b>{t('chatPage.header')}</b>
-            <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => handleModal('adding')}>
-              <ChannelButtonSVG />
-              <span className="visually-hidden">+</span>
-            </button>
+      {isLoading && <Spinner animation="border" variant="primary" className="position-fixed top-50 start-50 bottom-50 end-50 " />}
+      {data && (
+        <div className="row h-100 bg-white flex-md-row">
+          <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+            <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
+              <b>{t('chatPage.header')}</b>
+              <button type="button" className="p-0 text-primary btn btn-group-vertical" onClick={() => handleModal('adding')}>
+                <ChannelButtonSVG />
+                <span className="visually-hidden">+</span>
+              </button>
+            </div>
+            <Channels
+              activeChannel={activeChannel}
+              activeChannnelClick={activeChannnelClick}
+              handleModal={handleModal}
+            />
           </div>
-          <Channels
-            activeChannel={activeChannel}
-            activeChannnelClick={activeChannnelClick}
-            handleModal={handleModal}
-          />
+          <ChatBox activeChannel={activeChannel} />
+          {renderModal(
+            modalType,
+            closeModal,
+            activeChannnelClick,
+            errorValidation,
+            setErrorValidation,
+          )}
         </div>
-        <ChatBox activeChannel={activeChannel} messages={messages} />
-        {renderModal(
-          modalType,
-          closeModal,
-          activeChannnelClick,
-          errorValidation,
-          setErrorValidation,
-        )}
-      </div>
+      )}
     </div>
   );
 };

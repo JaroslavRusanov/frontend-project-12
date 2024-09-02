@@ -4,18 +4,20 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import { useGetAuthTokenMutation } from '../../store/api.js';
+import { setToken } from '../../store/Slices/authToken.js';
 import logo from '../../assets/login.jpeg';
 import useAuth from '../../auth/hook.jsx';
 
 const Login = () => {
-  // HOOKS
   const navigate = useNavigate();
   const location = useLocation();
   const [isInvalidAuth, setFailAuth] = useState(false);
   const { logIn } = useAuth();
   const [getToken] = useGetAuthTokenMutation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const fromPage = location?.state?.from?.pathname || '/';
 
@@ -29,6 +31,7 @@ const Login = () => {
         const { data } = await getToken(inputData);
         localStorage.setItem('userId', data.token);
         localStorage.setItem('userName', data.username);
+        dispatch(setToken(data.token));
         setFailAuth(false);
         logIn();
         navigate(fromPage);
