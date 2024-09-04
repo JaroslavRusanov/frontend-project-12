@@ -6,11 +6,10 @@ import {
   Link,
 } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ToastContainer, Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
-import { setMessages, messagesSelector } from './store/Slices/messages.js';
 import socket from './utils/socket.js';
 import AuthProvider from './auth/AuthProvider.jsx';
 import AuthButton from './auth/AuthButton.jsx';
@@ -21,58 +20,41 @@ import Chat from './Pages/Chat/Chat.jsx';
 import Signup from './Pages/Signup/Signup.jsx';
 import './locales/i18n.js';
 import { useGetChannelsQuery, useGetMessagesQuery } from './store/api.js';
-import { channelsSelector, setChannels } from './store/Slices/channels.js';
+import { actionChannels } from './store/Slices/channels.js';
+import { actionsMessages } from './store/Slices/messages.js';
 
 const App = () => {
   const dispatch = useDispatch();
-  const messages = useSelector(messagesSelector);
-  const channels = useSelector(channelsSelector);
   const { t } = useTranslation();
 
   try {
-    const initMessages = useGetMessagesQuery();
-    dispatch(setMessages(initMessages.data));
     const initChannels = useGetChannelsQuery();
-    dispatch(setChannels(initChannels.data));
+    const initMessages = useGetMessagesQuery();
+    if (initChannels.data && initMessages.data) {
+      console.log(initChannels.data);
+      console.log(initMessages.data);
+      dispatch(actionChannels.setChannels(initChannels.data));
+      dispatch(actionsMessages.setMessages(initMessages.data));
+    }
   } catch (err) {
     toast.error(t('toastify.error.conectionErr'));
     throw err;
   }
 
-  const checkMessage = (data) => {
-    const prevMessage = messages.filter(({ id }) => id === (data.id - 1));
-    if (!data.body.body) {
-      return prevMessage;
-    }
-    return data;
-  };
-
   useEffect(() => {
     socket.on('newMessage', (payload) => {
-      const newMessages = [...messages, checkMessage(payload)];
-      dispatch(setMessages(newMessages));
+      dispatch(actionsMessages.addMessage(payload));
     });
-  }, [messages, dispatch]);
-
-  useEffect(() => {
-    socket.on('newChannel', (data) => {
-      const newChannels = [...channels, data];
-      dispatch(setChannels(newChannels));
+    socket.on('newChannel', (payload) => {
+      dispatch(actionChannels.addChannel(payload));
     });
     socket.on('removeChannel', (payload) => {
-      const filteredChannels = channels.filter(({ id }) => payload.id === id);
-      dispatch(setChannels(filteredChannels));
+      dispatch(actionChannels.removeChannel(payload.id));
     });
     socket.on('renameChannel', (payload) => {
-      const renamedChannels = channels.map((channel) => {
-        if (channel.id === payload.id) {
-          return payload;
-        }
-        return channel;
-      });
-      dispatch(setChannels(renamedChannels));
+      dispatch(actionChannels.updateChannel(payload));
     });
-  }, [channels, dispatch]);
+  }, [dispatch]);
 
   return (
     <AuthProvider>

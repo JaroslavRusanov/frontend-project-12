@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from 'react-bootstrap';
-import { activeChannelSelector, setActiveChannel } from '../../store/Slices/channels.js';
-import { useGetMessagesQuery } from '../../store/api.js';
+import { activeChannelSelector, setActiveChannel } from '../../store/Slices/activeChannel.js';
+import { useGetChannelsQuery } from '../../store/api.js';
 import Channels from '../../components/Channels/Channels.jsx';
 import ChatBox from '../../components/ChatBox/ChatBox.jsx';
 import ChannelButtonSVG from '../../assets/ChannelButtonSVG.jsx';
@@ -38,7 +38,7 @@ const Chat = () => {
   const activeChannnelClick = (channel) => {
     dispatch(setActiveChannel(channel));
   };
-  const { data, isLoading } = useGetMessagesQuery();
+  const { data, isLoading } = useGetChannelsQuery();
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
   const { t } = useTranslation();
