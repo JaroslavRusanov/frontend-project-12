@@ -7,7 +7,6 @@ import { useGetMessagesQuery } from '../../store/api.js';
 const Messages = ({ activeChannel }) => {
   const { data } = useGetMessagesQuery();
   const messages = useSelector(messagesSelector);
-  console.log(messages);
   const activeChannelID = activeChannel.id;
   const scrollRef = useRef(null);
   const scrollDown = () => {

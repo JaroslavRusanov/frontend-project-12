@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from 'react-bootstrap';
 import { activeChannelSelector, setActiveChannel } from '../../store/Slices/activeChannel.js';
-import { useGetChannelsQuery } from '../../store/api.js';
+import { useGetChannelsQuery, useGetMessagesQuery } from '../../store/api.js';
 import Channels from '../../components/Channels/Channels.jsx';
 import ChatBox from '../../components/ChatBox/ChatBox.jsx';
 import ChannelButtonSVG from '../../assets/ChannelButtonSVG.jsx';
 import getModal from '../../components/modals/index.js';
+import { actionChannels } from '../../store/Slices/channels.js';
+import { actionsMessages } from '../../store/Slices/messages.js';
 
 const renderModal = (
   modalType,
@@ -33,12 +35,23 @@ const renderModal = (
 };
 
 const Chat = () => {
-  const activeChannel = useSelector(activeChannelSelector);
   const dispatch = useDispatch();
+
+  const activeChannel = useSelector(activeChannelSelector);
+
   const activeChannnelClick = (channel) => {
     dispatch(setActiveChannel(channel));
   };
-  const { data, isLoading } = useGetChannelsQuery();
+
+  const initChannels = useGetChannelsQuery();
+  const initMessages = useGetMessagesQuery();
+
+  const placeToStore = (messages, channels) => {
+    console.log(`Chat: ${messages}`);
+    dispatch(actionsMessages.setMessages(messages));
+    dispatch(actionChannels.setChannels(channels));
+  };
+
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
   const { t } = useTranslation();
@@ -51,8 +64,12 @@ const Chat = () => {
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      {isLoading && <Spinner animation="border" variant="primary" className="position-fixed top-50 start-50 bottom-50 end-50 " />}
-      {data && (
+      {initChannels.isLoading
+      && initMessages.isLoading
+      && <Spinner animation="border" variant="primary" className="position-fixed top-50 start-50 bottom-50 end-50 " />}
+      {initChannels.data
+      && initMessages.data
+      && (
         <div className="row h-100 bg-white flex-md-row">
           <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
@@ -63,12 +80,13 @@ const Chat = () => {
               </button>
             </div>
             <Channels
+              init={initChannels.data}
               activeChannel={activeChannel}
               activeChannnelClick={activeChannnelClick}
               handleModal={handleModal}
             />
           </div>
-          <ChatBox activeChannel={activeChannel} />
+          <ChatBox activeChannel={activeChannel} init={initMessages.data} />
           {renderModal(
             modalType,
             closeModal,
@@ -76,6 +94,7 @@ const Chat = () => {
             errorValidation,
             setErrorValidation,
           )}
+          {placeToStore(initMessages.data, initChannels.data)}
         </div>
       )}
     </div>

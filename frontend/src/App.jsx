@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import {
   BrowserRouter,
   Routes,
@@ -7,9 +6,8 @@ import {
 } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, Bounce, toast } from 'react-toastify';
+import { ToastContainer, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useTranslation } from 'react-i18next';
 import socket from './utils/socket.js';
 import AuthProvider from './auth/AuthProvider.jsx';
 import AuthButton from './auth/AuthButton.jsx';
@@ -19,27 +17,11 @@ import NotFound from './Pages/NotFound/NotFound.jsx';
 import Chat from './Pages/Chat/Chat.jsx';
 import Signup from './Pages/Signup/Signup.jsx';
 import './locales/i18n.js';
-import { useGetChannelsQuery, useGetMessagesQuery } from './store/api.js';
-import { actionChannels } from './store/Slices/channels.js';
 import { actionsMessages } from './store/Slices/messages.js';
+import { actionChannels } from './store/Slices/channels.js';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-
-  try {
-    const initChannels = useGetChannelsQuery();
-    const initMessages = useGetMessagesQuery();
-    if (initChannels.data && initMessages.data) {
-      console.log(initChannels.data);
-      console.log(initMessages.data);
-      dispatch(actionChannels.setChannels(initChannels.data));
-      dispatch(actionsMessages.setMessages(initMessages.data));
-    }
-  } catch (err) {
-    toast.error(t('toastify.error.conectionErr'));
-    throw err;
-  }
 
   useEffect(() => {
     socket.on('newMessage', (payload) => {
