@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
   const localStorageToken = localStorage.getItem('userId');
 
   const getInitLogggedIn = () => {
-    if (localStorageToken === currentToken) {
+    if (localStorageToken && localStorageToken === currentToken) {
       return true;
     }
     return false;
