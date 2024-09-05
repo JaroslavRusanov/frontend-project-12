@@ -1,14 +1,14 @@
 import { useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import { tokenSelector } from '../store/Slices/authToken.js';
+import { useSelector } from 'react-redux';
+import { tokenSelector } from '../store/Slices/authToken.js';
 import AuthContext from './contexts.jsx';
 
 const AuthProvider = ({ children }) => {
-  // const currentToken = useSelector(tokenSelector);
+  const currentToken = useSelector(tokenSelector);
   const localStorageToken = localStorage.getItem('userId');
 
   const getInitLogggedIn = () => {
-    if (localStorageToken) {
+    if (localStorageToken === currentToken) {
       return true;
     }
     return false;

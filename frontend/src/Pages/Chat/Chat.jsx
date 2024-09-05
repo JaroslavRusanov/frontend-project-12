@@ -47,9 +47,8 @@ const Chat = () => {
   const initMessages = useGetMessagesQuery();
 
   const placeToStore = (messages, channels) => {
-    console.log(`Chat: ${messages}`);
-    dispatch(actionsMessages.setMessages(messages));
     dispatch(actionChannels.setChannels(channels));
+    dispatch(actionsMessages.setMessages(messages));
   };
 
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
@@ -80,13 +79,12 @@ const Chat = () => {
               </button>
             </div>
             <Channels
-              init={initChannels.data}
               activeChannel={activeChannel}
               activeChannnelClick={activeChannnelClick}
               handleModal={handleModal}
             />
           </div>
-          <ChatBox activeChannel={activeChannel} init={initMessages.data} />
+          <ChatBox activeChannel={activeChannel} />
           {renderModal(
             modalType,
             closeModal,

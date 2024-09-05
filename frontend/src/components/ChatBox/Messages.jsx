@@ -1,13 +1,12 @@
 import filter from 'leo-profanity';
 import { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { messagesSelector } from '../../store/Slices/messages.js';
 import { useGetMessagesQuery } from '../../store/api.js';
 
-const Messages = ({ activeChannel }) => {
+const Messages = ({ activeChannel, messages }) => {
   const { data } = useGetMessagesQuery();
-  const messages = useSelector(messagesSelector);
+
   const activeChannelID = activeChannel.id;
+
   const scrollRef = useRef(null);
   const scrollDown = () => {
     scrollRef.current.scrollIntoView();

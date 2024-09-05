@@ -7,16 +7,13 @@ import { messagesSelector } from '../../store/Slices/messages.js';
 
 const ChatBox = ({ activeChannel }) => {
   const { t } = useTranslation();
-  const messages = useSelector(messagesSelector);
+  const messages = useSelector(messagesSelector.selectAll);
 
-  const getCounterMessagesById = (id) => {
-    if (!messages) {
-      return 0;
-    }
-    return messages
+  const getCounterMessagesById = (id) => (
+    messages
       .filter(({ channelID }) => channelID === id)
-      .length;
-  };
+      .length
+  );
 
   const counterMessages = getCounterMessagesById(activeChannel.id);
 

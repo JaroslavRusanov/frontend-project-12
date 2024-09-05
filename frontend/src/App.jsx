@@ -34,7 +34,7 @@ const App = () => {
       dispatch(actionChannels.removeChannel(payload.id));
     });
     socket.on('renameChannel', (payload) => {
-      dispatch(actionChannels.updateChannel(payload));
+      dispatch(actionChannels.updateChannel({ id: payload.id, changes: payload }));
     });
   }, [dispatch]);
 

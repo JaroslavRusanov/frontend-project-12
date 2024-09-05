@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { channelsSelector } from '../../store/Slices/channels.js';
 
 const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
-  const channels = useSelector(channelsSelector);
+  const channels = useSelector(channelsSelector.selectAll);
   const { t } = useTranslation();
 
   return (
