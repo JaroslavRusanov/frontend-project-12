@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +9,9 @@ import { Form } from 'react-bootstrap';
 import logo from '../../assets/avatar.jpg';
 import useAuth from '../../auth/hook.jsx';
 import { useAddNewUserMutation } from '../../store/api.js';
+import { setToken } from '../../store/Slices/authToken.js';
 
 const Signup = () => {
-  // HOOKS
   const [addNewUser, { error }] = useAddNewUserMutation();
   const navigate = useNavigate();
   const { logIn } = useAuth();
@@ -18,6 +19,7 @@ const Signup = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, [inputRef]);
+  const dispatch = useDispatch();
 
   const { t } = useTranslation();
 
@@ -28,6 +30,7 @@ const Signup = () => {
       const { data } = await addNewUser({ username: values.username, password: values.password });
       localStorage.setItem('userId', data.token);
       localStorage.setItem('userName', data.username);
+      dispatch(setToken(data.token));
       logIn();
       navigate('/');
     } catch (err) {

@@ -36,6 +36,10 @@ const App = () => {
     socket.on('renameChannel', (payload) => {
       dispatch(actionChannels.updateChannel({ id: payload.id, changes: payload }));
     });
+
+    return () => {
+      socket.off();
+    };
   }, [dispatch]);
 
   return (
