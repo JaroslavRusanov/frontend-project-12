@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux';
 import Messages from './Messages.jsx';
 import MessageInput from './MessageInput.jsx';
 import { messagesSelector } from '../../store/Slices/messages.js';
+import { activeChannelSelector } from '../../store/Slices/activeChannel.js';
 
-const ChatBox = ({ activeChannel }) => {
+const ChatBox = () => {
   const { t } = useTranslation();
   const messages = useSelector(messagesSelector.selectAll);
+  const activeChannel = useSelector(activeChannelSelector);
 
   const getCounterMessagesById = (id) => (
     messages

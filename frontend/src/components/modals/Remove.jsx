@@ -9,7 +9,6 @@ const Remove = ({
   closeModal,
   activeChannnelClick,
 }) => {
-  // HOOKS
   const currentChannelId = modalType.currentChannel.id;
   const [removeChannel] = useRemoveChannelMutation();
   const { t } = useTranslation();

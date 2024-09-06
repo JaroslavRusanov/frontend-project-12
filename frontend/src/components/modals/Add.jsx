@@ -12,7 +12,6 @@ const Add = ({
   errorValidation,
   setErrorValidation,
 }) => {
-  // HOOKS
   const [addChannel] = useAddChannelMutation();
   const { data } = useGetChannelsQuery();
   const { t } = useTranslation();
@@ -24,7 +23,6 @@ const Add = ({
     onSubmit: async (values) => {
       const channelsNames = await Object.entries(data).map(([, { name }]) => name);
       try {
-        // VALIDATION BY YUP
         const channelSchema = object({
           body: string()
             .min(3, t('modal.validation.range'))
@@ -32,7 +30,6 @@ const Add = ({
             .notOneOf(channelsNames, t('modal.validation.notOneOf')),
         });
         await channelSchema.validate(values);
-        // ADD CHANNEL
         const filteredName = filter.clean(values.body);
         const newChannel = await addChannel({ name: filteredName });
         activeChannnelClick(newChannel.data);

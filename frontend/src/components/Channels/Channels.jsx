@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import { channelsSelector } from '../../store/Slices/channels.js';
+import { activeChannelSelector } from '../../store/Slices/activeChannel.js';
 
-const Channels = ({ activeChannnelClick, activeChannel, handleModal }) => {
+const Channels = ({ activeChannnelClick, handleModal }) => {
   const channels = useSelector(channelsSelector.selectAll);
+  const activeChannel = useSelector(activeChannelSelector);
   const { t } = useTranslation();
 
   return (

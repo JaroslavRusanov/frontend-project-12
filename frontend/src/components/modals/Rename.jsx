@@ -13,7 +13,6 @@ const Rename = ({
   setErrorValidation,
   activeChannnelClick,
 }) => {
-  // HOOKS
   const [editChannel] = useEditChannelMutation();
   const { data } = useGetChannelsQuery();
   const { t } = useTranslation();
@@ -27,7 +26,6 @@ const Rename = ({
     onSubmit: async (values) => {
       const channelsNames = await Object.entries(data).map(([, { name }]) => name);
       try {
-        // VALIDATION BY YUP
         const channelSchema = object({
           body: string()
             .min(3, t('modal.validation.range'))
@@ -35,7 +33,6 @@ const Rename = ({
             .notOneOf(channelsNames, t('modal.validation.notOneOf')),
         });
         await channelSchema.validate(values);
-        // EDIT CHANNEL
         const filteredName = filter.clean(values.body);
         const newName = await editChannel({ id: currentChannelId, name: filteredName });
         activeChannnelClick(newName.data);

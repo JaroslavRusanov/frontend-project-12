@@ -19,6 +19,8 @@ import Signup from './Pages/Signup/Signup.jsx';
 import './locales/i18n.js';
 import { actionsMessages } from './store/Slices/messages.js';
 import { actionChannels } from './store/Slices/channels.js';
+import { setActiveChannel } from './store/Slices/activeChannel.js';
+import defaultChannel from './utils/defaultChannel.js';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const App = () => {
     });
     socket.on('removeChannel', (payload) => {
       dispatch(actionChannels.removeChannel(payload.id));
+      dispatch(setActiveChannel(defaultChannel));
     });
     socket.on('renameChannel', (payload) => {
       dispatch(actionChannels.updateChannel({ id: payload.id, changes: payload }));

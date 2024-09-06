@@ -7,13 +7,13 @@ const AuthProvider = ({ children }) => {
   const currentToken = useSelector(tokenSelector);
   const localStorageToken = localStorage.getItem('userId');
 
-  const getInitLogggedIn = () => {
+  const getInitLoggedIn = () => {
     if (localStorageToken && localStorageToken === currentToken) {
       return true;
     }
     return false;
   };
-  const [loggedIn, setLoggedIn] = useState(getInitLogggedIn());
+  const [loggedIn, setLoggedIn] = useState(getInitLoggedIn());
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');

@@ -1,20 +1,21 @@
 import filter from 'leo-profanity';
 import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useGetMessagesQuery } from '../../store/api.js';
+import { activeChannelSelector } from '../../store/Slices/activeChannel.js';
 
-const Messages = ({ activeChannel, messages }) => {
+const Messages = ({ messages }) => {
+  const activeChannel = useSelector(activeChannelSelector);
+
   const { data } = useGetMessagesQuery();
 
   const activeChannelID = activeChannel.id;
 
   const scrollRef = useRef(null);
-  const scrollDown = () => {
-    scrollRef.current.scrollIntoView();
-  };
 
   useEffect(() => {
-    scrollDown();
-  });
+    scrollRef.current.scrollIntoView();
+  }, [messages]);
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">

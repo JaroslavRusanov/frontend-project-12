@@ -3,7 +3,6 @@ import { Button } from 'react-bootstrap';
 import useAuth from './hook.jsx';
 
 const AuthButton = () => {
-  // HOOKS
   const auth = useAuth();
   const { t } = useTranslation();
 

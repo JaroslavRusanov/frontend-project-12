@@ -33,6 +33,7 @@ const MessageInput = ({ inputEl, channelID }) => {
           <Form.Control
             id="body"
             name="body"
+            required
             aria-label={t('messageInput.label')}
             placeholder={t('messageInput.placeholder')}
             className="border-0 p-0 ps-2 form-control"
