@@ -6,7 +6,7 @@ import MessageInputButton from '../../assets/MessageInputButtonSVG.jsx';
 
 const MessageInput = ({ inputEl, channelID }) => {
   const { t } = useTranslation();
-  const [addMessage] = useAddMessageMutation();
+  const [addMessage, { isLoading }] = useAddMessageMutation();
 
   const username = localStorage.getItem('userName');
 
@@ -41,7 +41,7 @@ const MessageInput = ({ inputEl, channelID }) => {
             value={formik.body}
             ref={inputEl}
           />
-          <button type="submit" disabled="" className="btn btn-group-vertical">
+          <button type="submit" disabled={isLoading} className="btn btn-group-vertical">
             <MessageInputButton />
             <span className="visually-hidden">{t('messageInput.button')}</span>
           </button>

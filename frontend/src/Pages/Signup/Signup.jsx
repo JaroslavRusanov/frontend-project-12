@@ -34,7 +34,7 @@ const Signup = () => {
       logIn();
       navigate('/');
     } catch (err) {
-      toast.error(t('toastify.error.connectionErr'));
+      toast.error(t('toastify.error.authErr'));
       throw err;
     }
   };

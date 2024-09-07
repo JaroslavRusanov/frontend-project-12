@@ -79,6 +79,7 @@ export default {
     toastify: {
       error: {
         connectionErr: 'Connection error',
+        authErr: 'Authorization error',
       },
       success: {
         channel: {

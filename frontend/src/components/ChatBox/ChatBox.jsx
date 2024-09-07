@@ -39,7 +39,7 @@ const ChatBox = () => {
             {t('chatBox.messages', { count: counterMessages })}
           </span>
         </div>
-        <Messages activeChannel={activeChannel} messages={messages} />
+        <Messages />
         <MessageInput inputEl={inputEl} channelID={activeChannel.id} />
       </div>
     </div>

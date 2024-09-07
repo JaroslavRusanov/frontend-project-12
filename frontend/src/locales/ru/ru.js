@@ -80,6 +80,7 @@ export default {
     toastify: {
       error: {
         connectionErr: 'Ошибка соединения',
+        authErr: 'Ошибка авторизации',
       },
       success: {
         channel: {

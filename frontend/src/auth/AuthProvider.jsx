@@ -7,13 +7,14 @@ const AuthProvider = ({ children }) => {
   const currentToken = useSelector(tokenSelector);
   const localStorageToken = localStorage.getItem('userId');
 
-  const getInitLoggedIn = () => {
+  const initLoggedIn = () => {
     if (localStorageToken && localStorageToken === currentToken) {
       return true;
     }
     return false;
   };
-  const [loggedIn, setLoggedIn] = useState(getInitLoggedIn());
+
+  const [loggedIn, setLoggedIn] = useState(initLoggedIn());
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
@@ -23,7 +24,13 @@ const AuthProvider = ({ children }) => {
 
   return (
     /* eslint-disable-next-line react/jsx-no-constructed-context-values */
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <AuthContext.Provider value={{
+      loggedIn,
+      logIn,
+      logOut,
+      initLoggedIn,
+    }}
+    >
       {children}
     </AuthContext.Provider>
   );

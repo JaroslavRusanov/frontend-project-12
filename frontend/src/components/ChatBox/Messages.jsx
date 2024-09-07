@@ -3,9 +3,11 @@ import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetMessagesQuery } from '../../store/api.js';
 import { activeChannelSelector } from '../../store/Slices/activeChannel.js';
+import { messagesSelector } from '../../store/Slices/messages.js';
 
-const Messages = ({ messages }) => {
+const Messages = () => {
   const activeChannel = useSelector(activeChannelSelector);
+  const messages = useSelector(messagesSelector.selectAll);
 
   const { data } = useGetMessagesQuery();
 
@@ -15,7 +17,7 @@ const Messages = ({ messages }) => {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView();
-  }, [messages]);
+  }, [messages, activeChannel]);
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
