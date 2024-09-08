@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import useAuth from '../../auth/hook.jsx';
 import { activeChannelSelector, setActiveChannel } from '../../store/Slices/activeChannel.js';
 import { useGetChannelsQuery, useGetMessagesQuery } from '../../store/api.js';
@@ -46,24 +45,21 @@ const Chat = () => {
 
   const initChannels = useGetChannelsQuery();
   const initMessages = useGetMessagesQuery();
-
+  const { t } = useTranslation();
   const { logOut } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (initChannels.error?.status === 401
       || initMessages.error?.status === 401) {
       logOut();
-      navigate('/login');
     } else if (initChannels.data && initMessages.data) {
       dispatch(actionChannels.setChannels(initChannels.data));
       dispatch(actionsMessages.setMessages(initMessages.data));
     }
-  }, [dispatch, logOut, initChannels, initMessages, navigate]);
+  }, [dispatch, logOut, initChannels, initMessages]);
 
   const [modalType, setModalType] = useState({ type: null, currentChannel: null });
   const [errorValidation, setErrorValidation] = useState({ isInvalid: false, error: '' });
-  const { t } = useTranslation();
 
   const handleModal = (type, currentChannel) => (
     currentChannel

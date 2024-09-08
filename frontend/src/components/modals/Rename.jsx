@@ -37,7 +37,9 @@ const Rename = ({
         const newName = await editChannel({ id: currentChannelId, name: filteredName });
         activeChannnelClick(newName.data);
         setErrorValidation({ isInvalid: false, error: '' });
-        toast.success(t('toastify.success.channel.rename'));
+        if (newName.error?.status === 401) {
+          toast.error(t('toastify.error.authErr'));
+        } else toast.success(t('toastify.success.channel.rename'));
         closeModal();
       } catch (err) {
         setErrorValidation({ isInvalid: true, error: err.message });

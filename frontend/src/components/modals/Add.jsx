@@ -34,7 +34,9 @@ const Add = ({
         const newChannel = await addChannel({ name: filteredName });
         activeChannnelClick(newChannel.data);
         setErrorValidation({ isInvalid: false, error: '' });
-        toast.success(t('toastify.success.channel.add'));
+        if (newChannel.error?.status === 401) {
+          toast.error(t('toastify.error.authErr'));
+        } else toast.success(t('toastify.success.channel.add'));
         closeModal();
       } catch (err) {
         setErrorValidation({ isInvalid: true, error: err.message });

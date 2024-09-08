@@ -11,7 +11,7 @@ const Messages = () => {
 
   const { data } = useGetMessagesQuery();
 
-  const activeChannelID = activeChannel.id;
+  const activeChannelID = activeChannel?.id;
 
   const scrollRef = useRef(null);
 

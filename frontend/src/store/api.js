@@ -33,7 +33,7 @@ export const api = createApi({
       query: () => ({
         url: routes.channelsPath,
       }),
-      providesTags: ['Channels'],
+      providesTags: ['Channels', 'Message'],
     }),
     addChannel: builder.mutation({
       query: (channel) => ({

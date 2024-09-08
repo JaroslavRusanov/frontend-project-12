@@ -22,14 +22,14 @@ const Channels = ({ activeChannnelClick, handleModal }) => {
           'text-start',
           'text-truncate',
           'btn',
-          { 'btn-secondary': channel.name === activeChannel.name },
+          { 'btn-secondary': channel.name === activeChannel?.name },
         );
 
         const classNamesToggle = cn(
           'flex-grow-0',
           'text-start',
           'btn',
-          { 'btn-secondary': channel.name === activeChannel.name },
+          { 'btn-secondary': channel.name === activeChannel?.name },
         );
 
         if (channel.removable) {

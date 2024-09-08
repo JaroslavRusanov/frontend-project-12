@@ -15,9 +15,11 @@ const Remove = ({
 
   const handleDelete = async () => {
     try {
-      await removeChannel(currentChannelId);
+      const delChannel = await removeChannel(currentChannelId);
       activeChannnelClick(defaultChannel);
-      toast.success(t('toastify.success.channel.remove'));
+      if (delChannel.error?.status === 401) {
+        toast.error(t('toastify.error.authErr'));
+      } else toast.success(t('toastify.success.channel.remove'));
       closeModal();
     } catch (err) {
       toast.error(t('toastify.error.connectionErr'));

@@ -17,7 +17,7 @@ const ChatBox = () => {
       .length
   );
 
-  const counterMessages = getCounterMessagesById(activeChannel.id);
+  const counterMessages = getCounterMessagesById(activeChannel?.id);
 
   const inputEl = useRef(null);
 
@@ -32,7 +32,7 @@ const ChatBox = () => {
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0">
             <b>
-              {`# ${activeChannel.name}`}
+              {`# ${activeChannel?.name}`}
             </b>
           </p>
           <span className="text-muted">
@@ -40,7 +40,7 @@ const ChatBox = () => {
           </span>
         </div>
         <Messages />
-        <MessageInput inputEl={inputEl} channelID={activeChannel.id} />
+        <MessageInput inputEl={inputEl} channelID={activeChannel?.id} />
       </div>
     </div>
   );
