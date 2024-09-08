@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -12,14 +12,11 @@ import useAuth from '../../auth/hook.jsx';
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isInvalidAuth, setFailAuth] = useState(false);
   const { logIn } = useAuth();
   const [getToken] = useGetAuthTokenMutation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const fromPage = location?.state?.from?.pathname || '/';
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +31,7 @@ const Login = () => {
         dispatch(setToken(data.token));
         setFailAuth(false);
         logIn();
-        navigate(fromPage);
+        navigate('/');
       } catch (err) {
         setFailAuth(true);
         toast.error(t('toastify.error.connectionErr'));

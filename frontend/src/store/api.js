@@ -33,6 +33,7 @@ export const api = createApi({
       query: () => ({
         url: routes.channelsPath,
       }),
+      keepUnusedDataFor: 1,
       providesTags: ['Channels', 'Message'],
     }),
     addChannel: builder.mutation({
@@ -62,6 +63,7 @@ export const api = createApi({
       query: () => ({
         url: routes.messagesPath,
       }),
+      keepUnusedDataFor: 1,
       providesTags: ['Channels', 'Message'],
     }),
     addMessage: builder.mutation({
