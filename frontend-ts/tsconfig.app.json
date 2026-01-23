@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsx",
+    "types": ["vite/client"], // <- важно, чтобы TS видел глобальные типы Vite
+
+
+    "moduleResolution": "Bundler",
+    "isolatedModules": true,
+
+    "allowJs": true,
+    "checkJs": false,
+
+    "strict": false,
+    "noImplicitAny": false,
+
+    "skipLibCheck": true
+  },
+  "include": ["src", "types"]
+}
