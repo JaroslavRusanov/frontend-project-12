@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "final frontend training project",
+  "description": "Chat slack",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,10 @@
   "author": "Iaroslav Rusanov sco.nuff@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.3",
+    "@hexlet/chat-server": "^1.1.9",
     "react-i18next": "^15.0.1"
+  },
+  "devDependencies": {
+    "jiti": "^2.6.1"
   }
 }

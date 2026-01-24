@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import socket from './utils/socket.js';
 import AuthProvider from './auth/AuthProvider.jsx';
 import AuthButton from './auth/AuthButton.jsx';
-import PrivateRoute from './auth/PtivateRoute.jsx';
+import PrivateRoute from './auth/PrivateRoute.jsx';
 import Login from './Pages/Login/Login.jsx';
 import NotFound from './Pages/NotFound/NotFound.jsx';
 import Chat from './Pages/Chat/Chat.jsx';

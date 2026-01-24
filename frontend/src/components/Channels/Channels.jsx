@@ -10,6 +10,8 @@ const Channels = ({ activeChannnelClick, handleModal }) => {
   const activeChannel = useSelector(activeChannelSelector);
   const { t } = useTranslation();
 
+  console.log(channels);
+
   return (
     <ul
       id="channels-box"
