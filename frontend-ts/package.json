@@ -11,11 +11,26 @@
     "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
+    "bootstrap": "^5.3.8",
+    "formik": "^2.4.9",
+    "i18next": "^25.8.0",
+    "leo-profanity": "^1.9.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "^19.2.0",
+    "react-i18next": "^16.5.3",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.13.0",
+    "react-toastify": "^11.0.5",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/eslint-plugin-jsx-a11y": "^6.10.1",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.53.1",
     "@typescript-eslint/parser": "^8.53.1",
     "@vitejs/plugin-react": "^5.1.1",

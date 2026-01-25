@@ -9,8 +9,19 @@ import tsPlugin from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 
 export default [
+  // игнорируемые файлы/папки
+  {
+    ignores: [
+      'dist/**',
+      'build/**',
+      'node_modules/**',
+    ],
+  },
+
+  // базовая конфигурация JS
   js.configs.recommended,
 
+  // наш основной конфиг
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
 
@@ -19,15 +30,10 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
+        ecmaFeatures: { jsx: true },
       },
-      globals: {
-        ...globals.browser,
-      },
+      globals: { ...globals.browser },
     },
-
 
     plugins: {
       react,
@@ -35,12 +41,12 @@ export default [
       functional,
       import: importPlugin,
       'jsx-a11y': jsxA11y,
-      '@typescript-eslint': tsPlugin
+      '@typescript-eslint': tsPlugin,
     },
 
     settings: {
       react: { version: 'detect' },
-      'import/resolver': { typescript: { project: './tsconfig.app.json' } }
+      'import/resolver': { typescript: { project: './tsconfig.app.json' } },
     },
 
     rules: {
@@ -58,13 +64,7 @@ export default [
       'functional/no-return-void': 0,
       'no-underscore-dangle': [2, { allow: ['__filename', '__dirname'] }],
       'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
-      'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }]
+      'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     },
-
-    ignores: [
-      'dist',
-      'build',
-      'node_modules',
-    ],
-  }
+  },
 ]
